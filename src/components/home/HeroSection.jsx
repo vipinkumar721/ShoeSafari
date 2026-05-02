@@ -15,23 +15,22 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
 
       {/* Content */}
-      <div className="relative z-10 flex items-center h-full px-6 md:px-16">
+      <div className="relative md:max-w-[1700px] m-auto z-10 flex items-center h-full px-6">
         <div className="max-w-xl text-white">
           {/* Subtitle */}
-          <p className="text-xs md:text-sm tracking-widest text-gray-300 mb-2">
-            THE EXPEDITION SERIES
+          <p className="text-xs md:text-2xl tracking-widest text-gray-300">
+            THE SAFARI COLLECTION
           </p>
 
           {/* Title */}
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
-            STEP INTO <br /> THE WILD
+          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold leading-tight mb-4">
+            STEP INTO THE WILD
           </h1>
 
           {/* Description */}
-          <p className="text-sm md:text-base text-gray-300 mb-6">
-            Engineered for the relentless explorer. Our footwear combines
-            high-performance ruggedness with the refined aesthetic of a modern
-            pioneer.
+          <p className="text-sm md:text-xl text-gray-300 mb-6">
+            Crafted for explorers who never settle. ShoeSafari footwear blends
+            durability, comfort, and style for every journey.
           </p>
 
           {/* Buttons */}
@@ -39,16 +38,16 @@ const HeroSection = () => {
             <Button
               type="primary"
               size="large"
-              className="!bg-orange-400 !rounded-[4px] !border-none !text-black font-semibold"
+              className="!bg-[#d3582b] !rounded-[4px] !border-none !text-white !font-semibold hover:bg-orange-600 hover:scale-105 transition-all duration-300 ease-in-out transform"
             >
-              SHOP THE COLLECTION
+              EXPLORE COLLECTION
             </Button>
 
             <Button
               size="large"
-              className="!bg-transparent !rounded-[4px] !border-gray-400 !text-white"
+              className="!bg-transparent !rounded-[4px] !border-gray-500 !text-white !font-semibold hover:scale-105 transition-all duration-300 ease-in-out transform"
             >
-              EXPLORE HERITAGE
+              START YOUR JOURNEY
             </Button>
           </div>
         </div>

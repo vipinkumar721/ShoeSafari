@@ -14,7 +14,7 @@ const AddProduct = () => {
       await addDoc(collection(db, "products"), {
         name: values.name,
         price: Number(values.price),
-        discount :values.discount ? Number(values.discount) : null,
+        discount: values.discount ? Number(values.discount) : null,
         description: values.description,
         category: values.category,
         image: values.image,
@@ -38,13 +38,13 @@ const AddProduct = () => {
 
   return (
     <div className="min-h-screen bg-[#0f0f0f] flex flex-col p-6">
-        <div className="flex justify-between items-center mb-6">
-          <div>
-            <h1 className="text-3xl text-white font-bold">ADD PRODUCT</h1>
-            <p className="text-gray-400 text-sm">EXPEDITION REGISTRY</p>
-          </div>
+      <div className="flex justify-between items-center mb-6">
+        <div>
+          <h1 className="text-3xl text-white font-bold">ADD PRODUCT</h1>
+          <p className="text-gray-400 text-sm">EXPEDITION REGISTRY</p>
+        </div>
 
-          {/* <div className="flex gap-3">
+        {/* <div className="flex gap-3">
             <Button className="!bg-gray-700 !px-10 !py-5 !text-white !border-none">
               DISCARD
             </Button>
@@ -55,20 +55,18 @@ const AddProduct = () => {
               ARCHIVE & SAVE
             </Button>
           </div> */}
-        </div>
+      </div>
       <div className="w-full max-w-3xl bg-[#1a1a1a] rounded-xl p-6 shadow-lg">
-
         {/* Header */}
         <h2 className="text-white text-lg font-semibold border-l-4 border-orange-500 pl-3 mb-6">
           PRODUCT DETAILS
         </h2>
 
         <Form layout="vertical" onFinish={onFinish} autoComplete="off">
-
           {/* Name */}
           <div className="mb-5 flex flex-col">
             <label className="text-xs text-gray-400 uppercase mb-2">
-              Gear Nomenclature
+              Gear
             </label>
             <Form.Item
               name="name"
@@ -76,7 +74,7 @@ const AddProduct = () => {
               className="!mb-0"
             >
               <Input
-                placeholder="e.g. Summit Pro 73 Heritage Boot"
+                placeholder="Product Name"
                 className="!bg-[#2a2a2a] !border-none !text-white placeholder:!text-gray-500 !rounded-lg h-10"
               />
             </Form.Item>
@@ -84,7 +82,9 @@ const AddProduct = () => {
 
           {/* Price */}
           <div className="mb-5 flex flex-col">
-            <label className="text-xs text-gray-400 uppercase mb-2">Price</label>
+            <label className="text-xs text-gray-400 uppercase mb-2">
+              Price
+            </label>
             <Form.Item
               name="price"
               rules={[{ required: true, message: "Enter price" }]}
@@ -117,14 +117,17 @@ const AddProduct = () => {
             <label className="text-xs text-gray-400 uppercase mb-2">
               Category
             </label>
-            <Form.Item name="category" className="mb-0"
-            rules={[{ required: true, message: "Select Category" }]}
+            <Form.Item
+              name="category"
+              className="mb-0"
+              rules={[{ required: true, message: "Select Category" }]}
             >
               <Select
                 options={[
-                  { label: "Demo1", value: "demo1" },
-                  { label: "Demo2", value: "demo2" },
-                  { label: "Demo3", value: "demo3" },
+                  { label: "Sneakers", value: "Sneakers" },
+                  { label: "Casual", value: "Casual" },
+                  { label: "Sports", value: "Sports" },
+                  { label: "Premium", value: "Premium" },
                 ]}
                 className="custom-select !bg-[#2a2a2a] !border-none !text-white !rounded-lg h-10"
               />
@@ -153,31 +156,39 @@ const AddProduct = () => {
             <label className="text-xs text-gray-400 uppercase mb-2">
               Expedition Narrative
             </label>
-            <Form.Item name="description" className="mb-0"
-            rules={[{ required: true, message: "Enter Discription" }]}
+            <Form.Item
+              name="description"
+              className="mb-0"
+              rules={[{ required: true, message: "Enter Discription" }]}
             >
               <TextArea
                 rows={5}
-                placeholder="Describe the tactical advantages..."
+                placeholder="Describe the gear advantages..."
                 className="!bg-[#2a2a2a] !border-none !text-white placeholder:!text-gray-500 !rounded-lg"
               />
             </Form.Item>
           </div>
 
           {/* Buttons */}
+
           <div className="flex justify-end gap-3 mt-6">
-            <Button onClick={() => navigate("/adminDashboard/product-list")} className="!bg-gray-700 !text-white !border-none px-6">
+            <Button
+              type="primary"
+              size="large"
+              onClick={() => navigate("/adminDashboard/product-list")}
+              className="!bg-transparent !rounded-[4px] !border-gray-500 !text-white !font-semibold hover:scale-105 transition-all duration-300 ease-in-out transform"
+            >
               DISCARD
             </Button>
-
             <Button
+              type="primary"
+              size="large"
               htmlType="submit"
-              className="!bg-orange-500 !text-white !border-none px-6"
+              className="!bg-[#d3582b] !rounded-[4px] !border-none !text-white !font-semibold hover:bg-orange-600 hover:scale-105 transition-all duration-300 ease-in-out transform"
             >
               SAVE
             </Button>
           </div>
-
         </Form>
       </div>
     </div>

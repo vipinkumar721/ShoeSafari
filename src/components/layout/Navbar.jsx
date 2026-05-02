@@ -4,10 +4,10 @@ import { Search, ShoppingBag, User, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const NAV_LINKS = [
-  { label: "Footwear", to: "/dashboard" },
-  { label: "Heritage", to: "/dashboard" },
-  { label: "Expeditions", to: "/dashboard" },
-  { label: "Sustainability", to: "/dashboard" },
+  { label: "Home" },
+  { label: "About" },
+  { label: "Products" },
+  { label: "Contact Us" },
 ];
 
 const ICON_ACTIONS = [
@@ -35,22 +35,20 @@ const Navbar = () => {
           fontFamily: "'Barlow', sans-serif",
         }}
       >
-        <div className="flex items-center justify-between h-16 px-6 md:px-12">
+        <div className="max-w-[1750px] m-auto flex items-center justify-between h-20 px-6 md:px-12">
           <Link
-            to="/dashboard"
-            className="text-xl tracking-widest font-extrabold select-none flex-shrink-0"
+            className="text-2xl tracking-widest font-extrabold select-none flex-shrink-0"
             style={{ color: "#e8734a", fontFamily: "'Montserrat', sans-serif" }}
           >
-            EQUIP
+            LOGO 
           </Link>
 
-          <ul className="hidden md:flex items-center gap-9 list-none m-0 p-0">
+          <ul className="hidden md:flex items-center gap-14 list-none m-0 p-0">
             {NAV_LINKS.map(({ label, to }) => (
               <li key={label}>
                 <Link
-                  to={to}
                   onClick={() => handleLinkClick(label)}
-                  className="relative text-sm font-semibold tracking-wide pb-1 transition-colors duration-200 no-underline"
+                  className="relative text-md font-semibold tracking-wide pb-1 transition-colors duration-200 no-underline"
                   style={{
                     color: activeLink === label ? "#e8734a" : "#f0ece4",
                     letterSpacing: "0.05em",

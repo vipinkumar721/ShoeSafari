@@ -1,30 +1,6 @@
 import { useState } from "react";
-import {
-  Search,
-  ShoppingBag,
-  User,
-  Menu,
-  X,
-  ChevronRight,
-  MapPin,
-  Phone,
-  Mail,
-  LogOut,
-  Settings,
-  Package,
-  Heart,
-  Shield,
-} from "lucide-react";
-import {
-  Drawer,
-  Avatar,
-  Tag,
-  Divider,
-  Badge,
-  Tooltip,
-  ConfigProvider,
-  theme,
-} from "antd";
+import {Search, ShoppingBag, User, Menu, X, ChevronRight, MapPin, Phone, Mail, LogOut, Settings, Package, Heart, Shield } from "lucide-react";
+import { Drawer, Avatar, Tag, Divider, Badge, Tooltip, ConfigProvider, theme } from "antd";
 
 /* ─────────────────────────────────────────
    Ant Design dark theme token override

@@ -2,6 +2,7 @@ import Navbar from "../../components/layout/Navbar";
 import { useAuth } from "../../context/AuthContext";
 import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
+efelwkflekwjflkewjfljwe
 import { Button } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Boxes, ShoppingCart, User } from "lucide-react";

@@ -10,7 +10,6 @@ import EssentialGear from "../components/home/EssentialGear";
 import FeaturesSection from "../components/home/FeaturesSection";
 import TrendingNow from "../components/home/TrendingNow";
 import StorySection from "../components/home/StorySection";
-import ShopPage from "./ShopPage";
 import Footer from "../components/layout/Footer";
 
 const Dashboard = () => {
@@ -22,15 +21,14 @@ const Dashboard = () => {
 
   return (
     <>
+      <Navbar />
       <div className="h-screen bg-[#ccc]">
         {/* <EquipNavbar/> */}
-        <Navbar/>
         <HeroSection />
         <EssentialGear />
         <TrendingNow />
         <FeaturesSection />
         <StorySection />
-        <ShopPage/>
         <Footer />
       </div>
     </>

@@ -62,7 +62,12 @@ const ProductList = () => {
           </div>
         </div>
         <div>
-         <Table columns={columns} dataSource={products} pagination={true} rowKey="id" />
+          <Table
+            columns={columns}
+            dataSource={products}
+            pagination={false}
+            rowKey="id"
+          />
         </div>
       </div>
     </>

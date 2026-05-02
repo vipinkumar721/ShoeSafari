@@ -7,24 +7,11 @@ const Footer = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
         
         <div>
-          <h2 className="text-white text-lg font-semibold mb-4">EQUIP</h2>
+          <h2 className="text-white text-lg font-semibold mb-4">SAFARI</h2>
           <p className="text-sm mb-4">
             Defining the intersection of performance and luxury for the modern explorer.
             From the city to the summit.
           </p>
-
-          {/* Social Icons */}
-          {/* <div className="flex gap-3">
-            <div className="w-9 h-9 flex items-center justify-center bg-white/10 rounded-full hover:bg-white hover:text-black transition cursor-pointer">
-              <Instagram size={18} />
-            </div>
-            <div className="w-9 h-9 flex items-center justify-center bg-white/10 rounded-full hover:bg-white hover:text-black transition cursor-pointer">
-              <Youtube size={18} />
-            </div>
-            <div className="w-9 h-9 flex items-center justify-center bg-white/10 rounded-full hover:bg-white hover:text-black transition cursor-pointer">
-              <Facebook size={18} />
-            </div>
-          </div> */}
         </div>
 
         <div>
