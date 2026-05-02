@@ -1,7 +1,3 @@
-import { signOut } from "firebase/auth";
-import { useAuth } from "../context/AuthContext";
-import { Button } from "antd";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import HeroSection from "../components/home/HeroSection";
 import EssentialGear from "../components/home/EssentialGear";

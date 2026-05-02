@@ -22,7 +22,7 @@ const AddProduct = () => {
       });
 
       notification.success({
-        message: "Success",
+        title: "Success",
         description: "Product Added Successfully",
       });
 

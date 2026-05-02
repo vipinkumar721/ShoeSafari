@@ -2,9 +2,13 @@ import { Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, increaseQty, decreaseQty } from "../redux/cartSlice";
 import Navbar from "../components/layout/Navbar";
+import { notification } from "antd";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
   const subtotal = cartItems.reduce(
@@ -13,15 +17,14 @@ export default function Cart() {
   );
 
   const shipping = 450;
-  const insurance = 200;
-  const total = subtotal + shipping + insurance;
+  const total = subtotal + shipping;
 
   return (
     <>
       <Navbar />
       <div className="min-h-screen bg-black text-white p-8">
         {/* Heading */}
-        <h1 className="text-3xl font-bold mb-2">Your valut</h1>
+        <h1 className="text-3xl font-bold mb-2">Your Vault</h1>
         <p className="text-gray-400 mb-8">Reserved items for your journey.</p>
 
         <div className="grid grid-cols-3 gap-6">
@@ -49,26 +52,33 @@ export default function Cart() {
 
                     {/* Qty Controls */}
                     <div className="flex items-center gap-2 mt-2">
-                      <button
+                      <Button
                         onClick={() => dispatch(decreaseQty(item.id))}
                         className="px-3 py-1 bg-[#222] rounded"
                       >
                         -
-                      </button>
+                      </Button>
                       <span>{item.quantity}</span>
-                      <button
+                      <Button
                         onClick={() => dispatch(increaseQty(item.id))}
                         className="px-3 py-1 bg-[#222] rounded"
                       >
                         +
-                      </button>
+                      </Button>
 
-                      <button
-                        onClick={() => dispatch(removeFromCart(item.id))}
+                      <Button
+                        onClick={() => {
+                          console.log("Item Reemoved");
+                          dispatch(removeFromCart(item.id));
+                          notification.warning({
+                            message: "Item Removed",
+                            description: "Removed from cart",
+                          });
+                        }}
                         className="text-gray-400 text-sm ml-3 hover:text-red-500"
                       >
                         Remove
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -95,11 +105,6 @@ export default function Cart() {
                 <span>Shipping</span>
                 <span className="text-orange-400">₹ {shipping}</span>
               </div>
-
-              <div className="flex justify-between">
-                <span>Insurance</span>
-                <span>₹ {insurance}</span>
-              </div>
             </div>
 
             <div className="border-t border-gray-700 my-4"></div>
@@ -110,10 +115,14 @@ export default function Cart() {
             </div>
 
             <Button
+              onClick={() => {
+                console.log("clicked")
+                navigate("/checkout");
+              }}
               type="primary"
               className="w-full mt-4 !bg-orange-500 !border-none h-10"
             >
-              CHECKOUT
+              Processed to CHECKOUT
             </Button>
 
             <p className="text-xs text-gray-500 mt-3 text-center">

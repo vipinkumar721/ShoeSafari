@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
-import { Image, Table } from "antd";
+import { Image, Table, Button } from "antd";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -21,6 +21,10 @@ const ProductList = () => {
     };
     fetchProducts();
   }, []);
+
+  const handleDelete = async (id) => {
+    await deleteDoc(doc(db, "products", id));
+  };
 
   const columns = [
     {
@@ -49,6 +53,19 @@ const ProductList = () => {
     {
       title: "category",
       dataIndex: "category",
+    },
+    {
+      title: "Actions",
+      render: (_, record) => (
+        <div style={{ display: "flex", gap: "8px" }}>
+          <Button type="primary" onClick={() => handleEdit(record.id)}>
+            Edit
+          </Button>
+          <Button danger onClick={() => handleDelete(record.id)}>
+            Delete
+          </Button>
+        </div>
+      ),
     },
   ];
 

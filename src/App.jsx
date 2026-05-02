@@ -8,6 +8,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AddProduct from "./pages/admin/AddProduct";
 import ProductList from "./pages/admin/ProductList";
 import Cart from "./pages/cart";
+import ProductDetail from "./pages/ProductDetail";
+import Checkout from "./pages/Checkout";
 
 const App = () => {
   return (
@@ -44,6 +46,8 @@ const App = () => {
             }
           />
           <Route path="/cart" element={<Cart />} />
+          <Route path="product/:id" element={<ProductDetail/>}/>
+          <Route path="/checkout" element={<Checkout/>}/>
         </Routes>
       </BrowserRouter>
     </>

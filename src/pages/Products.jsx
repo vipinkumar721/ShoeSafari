@@ -7,6 +7,8 @@ import { Checkbox, Button } from "antd";
 import Navbar from "../components/layout/Navbar";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/cartSlice";
+import { notification } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   "EXPEDITION SERIES",
@@ -19,6 +21,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [selected, setSelected] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onChange = (checkedValues) => {
     console.log("Selected Categories:", checkedValues);
@@ -92,19 +95,23 @@ const Products = () => {
 
               <div className="flex flex-wrap gap-11">
                 {products.map((item) => (
-                  <div
+                  <Card
                     key={item.id}
+                    hoverable
+                    cover={
+                      <img
+                        onClick={() => {
+                          navigate(`/product/${item.id}`);
+                        }}
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-[350px] object-cover group-hover:scale-105 transition duration-500"
+                      />
+                    }
                     className="bg-neutral-900 rounded-[4px] overflow-hidden group w-[350px]"
                   >
-                    {/* Image */}
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-[350px] object-cover group-hover:scale-105 transition duration-500"
-                    />
-
                     {/* Info */}
-                    <div className="p-4">
+                    <div className="">
                       <div className="flex justify-between items-center">
                         <h3 className="text-sm md:text-xl font-semibold">
                           {item.name}
@@ -129,13 +136,17 @@ const Products = () => {
                           onClick={() => {
                             console.log("ADDING:", item);
                             dispatch(addToCart(item));
+                            notification.success({
+                              message: "Success",
+                              description: "Added in cart",
+                            });
                           }}
                         >
                           Add to Cart
                         </Button>
                       </div>
                     </div>
-                  </div>
+                  </Card>
                 ))}
               </div>
             </div>
