@@ -1,26 +1,42 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
 import { notification } from "antd";
 import { Form } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import login_banner from "../assets/images/login_banner.png";
+import { doc, getDoc } from "firebase/firestore";
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+      const response = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password,
+      );
+      console.log(response.user, "response");
+      localStorage.setItem("product_admin", JSON.stringify(response?.user));
       notification.success({
         message: "Success",
         description: "Login Successfully ✅",
       });
-      navigate("/dashboard");
 
+      const user = response.user;
+      const adminRef = doc(db, "admins", user.uid);
+      const adminSnap = await getDoc(adminRef);
+
+      if (adminSnap.exists()) {
+        navigate("/adminDashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       let errormsg = "Something Wrong";
       if (error.code === "auth/invalid-credential") {
@@ -34,11 +50,6 @@ const Login = () => {
       setLoading(false);
     }
   };
-  
-  
-
-
-
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -48,11 +59,7 @@ const Login = () => {
     <div className="h-screen flex" style={{ background: "#1a1a1a" }}>
       {/* Left Panel */}
       <div className="w-[60%] hidden md:flex items-center justify-center">
-        <img
-          className="h-full w-full object-cover"
-          src="https://images.unsplash.com/photo-1588361861040-ac9b1018f6d5?w=500&auto=format&fit=crop&q=60"
-          alt=""
-        />
+        <img className="h-full w-full object-cover" src={login_banner} alt="" />
       </div>
 
       {/* Right Panel */}
@@ -65,9 +72,7 @@ const Login = () => {
             className="text-4xl font-bold leading-tight mb-2"
             style={{ color: "#ffffff" }}
           >
-            Authorize
-            <br />
-            Access
+            Login
           </h1>
 
           <p className="text-sm mb-8" style={{ color: "#888888" }}>
@@ -115,12 +120,8 @@ const Login = () => {
                       border: "1px solid #3a3a3a",
                       color: "#cccccc",
                     }}
-                    onFocus={(e) =>
-                      (e.target.style.borderColor = "#e8711a")
-                    }
-                    onBlur={(e) =>
-                      (e.target.style.borderColor = "#3a3a3a")
-                    }
+                    onFocus={(e) => (e.target.style.borderColor = "#e8711a")}
+                    onBlur={(e) => (e.target.style.borderColor = "#3a3a3a")}
                   />
                 </div>
               </Form.Item>
@@ -135,13 +136,6 @@ const Login = () => {
                 >
                   Password
                 </label>
-
-                <span
-                  className="text-xs font-semibold tracking-widest uppercase cursor-pointer"
-                  style={{ color: "#aaaaaa" }}
-                >
-                  Forgot Password?
-                </span>
               </div>
 
               <Form.Item
@@ -168,12 +162,8 @@ const Login = () => {
                       border: "1px solid #3a3a3a",
                       color: "#cccccc",
                     }}
-                    onFocus={(e) =>
-                      (e.target.style.borderColor = "#e8711a")
-                    }
-                    onBlur={(e) =>
-                      (e.target.style.borderColor = "#3a3a3a")
-                    }
+                    onFocus={(e) => (e.target.style.borderColor = "#e8711a")}
+                    onBlur={(e) => (e.target.style.borderColor = "#3a3a3a")}
                   />
 
                   <button
@@ -210,7 +200,9 @@ const Login = () => {
               </button>
             </Form.Item>
           </Form>
-          <Link to="/signup">Create new account?</Link>
+          <div className="text-white pt-4">
+            <Link to="/signup">Create new account?</Link>
+          </div>
         </div>
       </div>
     </div>

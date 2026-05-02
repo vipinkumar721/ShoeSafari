@@ -3,68 +3,203 @@ import { auth } from "../config/firebase";
 import { Button, Checkbox, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { notification } from "antd";
+import login_banner from "../assets/images/login_banner.png"
 
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
- const navigate =  useNavigate();
-  
   const onFinish = async (values) => {
     try {
       await createUserWithEmailAndPassword(auth, values.email, values.password);
-      alert("UserCreated Succesfully");
-      navigate("login");
-    } catch (error) {
-      alert(error.message);
+      notification.success({
+        title: "Sign Up Completed",
+        description: "UserCreated Succesfully",
+      });
       navigate("/");
+    } catch (error) {
+      if (error === "auth/email-already-in-use") {
+        notification.error({
+          title: "Something Wrong!",
+          description: "Already have an account create new or login!",
+        });
+      }
+      notification.error({
+        title: "Something Wrong!",
+        description: "Already have an account create new or login!",
+      });
     }
   };
   const onFinishFailed = (errorInfo) => {
-    alert("Please fill email or password properly");
+    notification.error({
+      title: "Something Wrong!",
+      description: "Please fill email or password properly",
+    });
   };
 
-
   return (
-    <div>
-      <h1>Sign Up here</h1>
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
+    <div className="h-screen flex" style={{ background: "#1a1a1a" }}>
+      {/* Left Panel */}
+      <div className="w-[60%] hidden md:flex items-center justify-center">
+        <img
+          className="h-full w-full object-cover"
+          src={login_banner}
+          alt=""
+        />
+      </div>
+
+      {/* Right Panel */}
+      <div
+        className="sm:w-[40%] w-full flex items-center justify-center p-8"
+        style={{ background: "#1e1e1e" }}
       >
-        <Form.Item
-          label="Email"
-          name="email"
-          rules={[{ required: true, message: "Please input your Email!" }]}
-        >
-          <Input />
-        </Form.Item>
+        <div className="w-full max-w-sm">
+          <h1
+            className="text-4xl font-bold leading-tight mb-2"
+            style={{ color: "#ffffff" }}
+          >
+            Sign Up
+          </h1>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[{ required: true, message: "Please input your password!" }]}
-        >
-          <Input.Password />
-        </Form.Item>
+          <p className="text-sm mb-8" style={{ color: "#888888" }}>
+            Enter your Details
+          </p>
 
-        <Form.Item name="remember" valuePropName="checked" label={null}>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+          <Form
+            name="basic"
+            layout="vertical"
+            style={{ maxWidth: 600 }}
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+          >
+            {/* Email */}
+            <div className="mb-4">
+              <label
+                className="block text-xs font-semibold tracking-widest uppercase mb-2"
+                style={{ color: "#aaaaaa" }}
+              >
+                Email Address
+              </label>
 
-        <Form.Item label={null}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+              <Form.Item
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                  { type: "email", message: "Enter a valid email!" },
+                ]}
+                style={{ marginBottom: 0 }}
+              >
+                <div className="relative">
+                  <span
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-sm"
+                    style={{ color: "#555555" }}
+                  >
+                    ✉
+                  </span>
 
-<Link to="/">Already have an accont?</Link>
-    
+                  <input
+                    type="email"
+                    placeholder="explorer@equipt.com"
+                    className="w-full rounded-lg pl-9 pr-3 py-3 text-sm outline-none transition-colors"
+                    style={{
+                      background: "#2a2a2a",
+                      border: "1px solid #3a3a3a",
+                      color: "#cccccc",
+                    }}
+                    onFocus={(e) => (e.target.style.borderColor = "#e8711a")}
+                    onBlur={(e) => (e.target.style.borderColor = "#3a3a3a")}
+                  />
+                </div>
+              </Form.Item>
+            </div>
+
+            {/* Password */}
+            <div className="mb-4">
+              <label
+                className="block text-xs font-semibold tracking-widest uppercase mb-2"
+                style={{ color: "#aaaaaa" }}
+              >
+                Password
+              </label>
+            </div>
+            <Form.Item
+              name="password"
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+              style={{ marginBottom: 0 }}
+            >
+              <div className="relative">
+                <span
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-sm"
+                  style={{ color: "#555555" }}
+                >
+                  🔒
+                </span>
+
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="w-full rounded-lg pl-9 pr-10 py-3 text-sm outline-none transition-colors"
+                  style={{
+                    background: "#2a2a2a",
+                    border: "1px solid #3a3a3a",
+                    color: "#cccccc",
+                  }}
+                  onFocus={(e) => (e.target.style.borderColor = "#e8711a")}
+                  onBlur={(e) => (e.target.style.borderColor = "#3a3a3a")}
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
+                  style={{
+                    color: "#555555",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  👁
+                </button>
+              </div>
+            </Form.Item>
+
+            {/* Remember Me */}
+            <Form.Item name="remember" valuePropName="checked">
+              <Checkbox style={{ color: "#aaaaaa" }}>Remember me</Checkbox>
+            </Form.Item>
+
+            {/* Submit */}
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                block
+                style={{
+                  background: "#e8711a",
+                  border: "none",
+                  height: "50px",
+                  fontWeight: "bold",
+                  borderRadius: "8px",
+                }}
+              >
+                Sign Up
+              </Button>
+            </Form.Item>
+          </Form>
+
+          <div className="text-white pt-4">
+            <Link to="/">Already have an accont?</Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

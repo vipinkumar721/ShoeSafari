@@ -3,6 +3,8 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import Products from "./pages/Products";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const App = () => {
   return (
@@ -14,6 +16,16 @@ const App = () => {
           <Route path="/dashboard" element={
             <ProtectedRoute>
               <Dashboard/>
+            </ProtectedRoute>
+          }/>
+          <Route path="/adminDashboard" element={
+            <ProtectedRoute>
+              <AdminDashboard/>
+            </ProtectedRoute>
+          }/>
+          <Route path="/products" element={
+            <ProtectedRoute>
+              <Products/>
             </ProtectedRoute>
           }/>
         </Routes>
