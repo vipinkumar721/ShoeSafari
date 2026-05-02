@@ -1,11 +1,12 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth, db } from "../../config/firebase";
 import { Button, Checkbox, Form, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { notification } from "antd";
-import login_banner from "../assets/images/login_banner.png"
+import login_banner from "../../assets/images/login_banner.png";
+import { doc, setDoc } from "firebase/firestore";
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
@@ -14,7 +15,19 @@ const Signup = () => {
 
   const onFinish = async (values) => {
     try {
-      await createUserWithEmailAndPassword(auth, values.email, values.password);
+      const userCreadentails = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password,
+      );
+
+      const user = userCreadentails.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        email: values.email,
+        role: "user",
+      });
+
       notification.success({
         title: "Sign Up Completed",
         description: "UserCreated Succesfully",
@@ -29,7 +42,7 @@ const Signup = () => {
       }
       notification.error({
         title: "Something Wrong!",
-        description: "Already have an account create new or login!",
+        description: error?.message || "Please try again later.",
       });
     }
   };
@@ -44,11 +57,7 @@ const Signup = () => {
     <div className="h-screen flex" style={{ background: "#1a1a1a" }}>
       {/* Left Panel */}
       <div className="w-[60%] hidden md:flex items-center justify-center">
-        <img
-          className="h-full w-full object-cover"
-          src={login_banner}
-          alt=""
-        />
+        <img className="h-full w-full object-cover" src={login_banner} alt="" />
       </div>
 
       {/* Right Panel */}
@@ -196,7 +205,7 @@ const Signup = () => {
           </Form>
 
           <div className="text-white pt-4">
-            <Link to="/">Already have an accont?</Link>
+            <Link to="/login">Already have an accont?</Link>
           </div>
         </div>
       </div>

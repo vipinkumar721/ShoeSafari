@@ -1,11 +1,11 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../config/firebase";
+import { auth, db } from "../../config/firebase";
 import { notification } from "antd";
 import { Form } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import login_banner from "../assets/images/login_banner.png";
+import login_banner from "../../assets/images/login_banner.png";
 import { doc, getDoc } from "firebase/firestore";
 
 const Login = () => {
@@ -22,21 +22,21 @@ const Login = () => {
         values.password,
       );
       console.log(response.user, "response");
-      localStorage.setItem("product_admin", JSON.stringify(response?.user));
+
+      const user = response.user;
+      const adminSnap = await getDoc(doc(db, "users", user.uid));
+
+      const userData = adminSnap.data();
+      if (userData?.role === "admin") {
+        navigate("/adminDashboard");
+      } else {
+        navigate("/");
+      }
+
       notification.success({
         message: "Success",
         description: "Login Successfully ✅",
       });
-
-      const user = response.user;
-      const adminRef = doc(db, "admins", user.uid);
-      const adminSnap = await getDoc(adminRef);
-
-      if (adminSnap.exists()) {
-        navigate("/adminDashboard");
-      } else {
-        navigate("/dashboard");
-      }
     } catch (error) {
       let errormsg = "Something Wrong";
       if (error.code === "auth/invalid-credential") {
@@ -44,7 +44,7 @@ const Login = () => {
       }
       notification.error({
         message: "Login Failed",
-        description: errormsg,
+        description: errormsg || "Something went wrong. Please try again.",
       });
     } finally {
       setLoading(false);

@@ -1,37 +1,14 @@
 import Navbar from "../../components/layout/Navbar";
 import { useAuth } from "../../context/AuthContext";
-import { getAuth, signOut } from "firebase/auth";
 import { useState } from "react";
-efelwkflekwjflkewjfljwe
 import { Button } from "antd";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Boxes, ShoppingCart, User } from "lucide-react";
 import { Package } from "lucide-react";
 
-// const menuItems = [
-//   { name: "Inventory", icon: <Boxes size={18} /> },
-//   { name: "See Products", icon: <ShoppingCart size={18} /> },
-// ];
-
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const auth = getAuth();
-
-  const handleSignout = async () => {
-    await signOut(auth);
-  };
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <>

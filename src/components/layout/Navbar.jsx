@@ -11,11 +11,10 @@ const NAV_LINKS = [
 ];
 
 const ICON_ACTIONS = [
-  { Icon: Search, label: "Search" },
-  { Icon: ShoppingBag, label: "Bag" },
-  { Icon: User, label: "Account" },
+  { Icon: Search, label: "Search", to: "" },
+  { Icon: ShoppingBag, label: "Bag", to: "/cart" },
+  { Icon: User, label: "Account", to: "" },
 ];
-
 const Navbar = () => {
   const [activeLink, setActiveLink] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -40,7 +39,7 @@ const Navbar = () => {
             className="text-2xl tracking-widest font-extrabold select-none flex-shrink-0"
             style={{ color: "#e8734a", fontFamily: "'Montserrat', sans-serif" }}
           >
-            LOGO 
+            LOGO
           </Link>
 
           <ul className="hidden md:flex items-center gap-14 list-none m-0 p-0">
@@ -69,32 +68,42 @@ const Navbar = () => {
 
           <div className="flex items-center gap-4 flex-shrink-0">
             <div className="hidden md:flex items-center gap-8">
-              {ICON_ACTIONS.map(({ Icon, label }) => (
-                <Tooltip
-                  key={label}
-                  title={label}
-                  placement="bottom"
-                  overlayStyle={{ fontSize: 12 }}
-                >
-                  <Button
-                    className="flex items-center justify-center !px-0 rounded transition-all duration-200 hover:scale-110"
-                    style={{
-                      color: "#f0ece4",
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.color = "#e8734a")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.color = "#f0ece4")
-                    }
+              {ICON_ACTIONS.map(({ Icon, label, to }) => {
+                const content = (
+                  <Tooltip
+                    key={label}
+                    title={label}
+                    placement="bottom"
+                    overlayStyle={{ fontSize: 12 }}
                   >
-                    <Icon size={20} strokeWidth={1.8} />
-                  </Button>
-                </Tooltip>
-              ))}
+                    <Button
+                      className="flex items-center justify-center !px-0 rounded transition-all duration-200 hover:scale-110"
+                      style={{
+                        color: "#f0ece4",
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                      onMouseEnter={(e) =>
+                        (e.currentTarget.style.color = "#e8734a")
+                      }
+                      onMouseLeave={(e) =>
+                        (e.currentTarget.style.color = "#f0ece4")
+                      }
+                    >
+                      <Icon size={20} strokeWidth={1.8} />
+                    </Button>
+                  </Tooltip>
+                );
+
+                return to ? (
+                  <Link key={label} to={to}>
+                    {content}
+                  </Link>
+                ) : (
+                  <div key={label}>{content}</div>
+                );
+              })}
             </div>
 
             <div className="flex md:hidden items-center gap-3">

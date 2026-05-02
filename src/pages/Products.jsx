@@ -3,8 +3,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { db } from "../config/firebase";
 import { Card } from "antd";
-import { Checkbox } from "antd";
+import { Checkbox, Button } from "antd";
 import Navbar from "../components/layout/Navbar";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/cartSlice";
 
 const categories = [
   "EXPEDITION SERIES",
@@ -16,6 +18,7 @@ const categories = [
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [selected, setSelected] = useState([]);
+  const dispatch = useDispatch();
 
   const onChange = (checkedValues) => {
     console.log("Selected Categories:", checkedValues);
@@ -25,10 +28,14 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       const querySnapshot = await getDocs(collection(db, "products"));
-      const data = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const data = querySnapshot.docs.map((doc) => {
+        const raw = doc.data();
+        return {
+          id: doc.id,
+          ...raw,
+          created: raw.created?.toDate().toISOString(), // ✅ convert
+        };
+      });
       setProducts(data);
     };
     fetchProducts();
@@ -99,19 +106,33 @@ const Products = () => {
                     {/* Info */}
                     <div className="p-4">
                       <div className="flex justify-between items-center">
-                        <h3 className="text-sm md:text-xl font-semibold">{item.name}</h3>
+                        <h3 className="text-sm md:text-xl font-semibold">
+                          {item.name}
+                        </h3>
                         <span className="text-sm md:text-xl font-semibold tracking-wide text-orange-400">{`₹${item.price}`}</span>
                       </div>
-                      <p className="text-xs md:text-[16px] text-gray-400 h-11 my-2">{item.description}</p>
+                      <p className="text-xs md:text-[16px] text-gray-400 h-11 my-2">
+                        {item.description}
+                      </p>
 
                       {/* Tags */}
                       <div className="flex gap-2 mt-3">
                         <span className="text-md font-bold text-white bg-orange-400 text-black px-2 py-1 rounded">
-                          {item.discount ? `${item.discount}% OFF` : "No Discount"}
+                          {item.discount
+                            ? `${item.discount}% OFF`
+                            : "No Discount"}
                         </span>
                         <span className="text-md font-bold text-white bg-orange-400 text-black px-2 py-1 rounded">
                           {item.category}
                         </span>
+                        <Button
+                          onClick={() => {
+                            console.log("ADDING:", item);
+                            dispatch(addToCart(item));
+                          }}
+                        >
+                          Add to Cart
+                        </Button>
                       </div>
                     </div>
                   </div>

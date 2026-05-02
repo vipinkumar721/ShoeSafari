@@ -43,18 +43,6 @@ const AddProduct = () => {
           <h1 className="text-3xl text-white font-bold">ADD PRODUCT</h1>
           <p className="text-gray-400 text-sm">EXPEDITION REGISTRY</p>
         </div>
-
-        {/* <div className="flex gap-3">
-            <Button className="!bg-gray-700 !px-10 !py-5 !text-white !border-none">
-              DISCARD
-            </Button>
-            <Button
-              type="primary"
-              className="!bg-orange-500 !border-none !px-10 !py-5 !text-white"
-            >
-              ARCHIVE & SAVE
-            </Button>
-          </div> */}
       </div>
       <div className="w-full max-w-3xl bg-[#1a1a1a] rounded-xl p-6 shadow-lg">
         {/* Header */}
