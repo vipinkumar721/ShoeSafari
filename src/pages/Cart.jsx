@@ -21,7 +21,7 @@ export default function Cart() {
       <Navbar />
       <div className="min-h-screen bg-black text-white p-8">
         {/* Heading */}
-        <h1 className="text-3xl font-bold mb-2">Your Vault</h1>
+        <h1 className="text-3xl font-bold mb-2">Your Cart</h1>
         <p className="text-gray-400 mb-8">Reserved items for your journey.</p>
 
         <div className="grid grid-cols-3 gap-6">
