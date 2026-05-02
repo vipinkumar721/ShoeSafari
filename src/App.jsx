@@ -5,6 +5,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AddProduct from "./pages/admin/AddProduct";
+import ProductList from "./pages/admin/ProductList";
 
 const App = () => {
   return (
@@ -22,7 +24,10 @@ const App = () => {
             <ProtectedRoute>
               <AdminDashboard/>
             </ProtectedRoute>
-          }/>
+          }>
+            <Route path="addProduct" element={<AddProduct/>}/>
+            <Route path="product-list" element={<ProductList/>}/>
+          </Route>
           <Route path="/products" element={
             <ProtectedRoute>
               <Products/>

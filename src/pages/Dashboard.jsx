@@ -32,12 +32,6 @@ const Dashboard = () => {
         <StorySection />
         <ShopPage/>
         <Footer />
-        <div>
-          <h1>Welcome to the ShoeSafari Dashboard</h1>
-          <p>user name{user?.email}</p>
-          <Button onClick={handleLogout}>Log Out</Button>
-          <Button onClick={() => navigate("/products")}>View Products</Button>
-        </div>
       </div>
     </>
   );
