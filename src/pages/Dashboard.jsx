@@ -9,15 +9,11 @@ import Footer from "../components/layout/Footer";
 const Dashboard = () => {
   return (
     <>
-      <Navbar />
-      <div className="h-screen bg-[#ccc]">
-        <HeroSection />
-        <EssentialGear />
-        <TrendingNow />
-        <FeaturesSection />
-        <StorySection />
-        <Footer />
-      </div>
+      <HeroSection />
+      <EssentialGear />
+      <TrendingNow />
+      <FeaturesSection />
+      <StorySection />
     </>
   );
 };

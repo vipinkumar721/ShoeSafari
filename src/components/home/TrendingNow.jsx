@@ -7,33 +7,29 @@ const products = [
     desc: "EXPEDITION SERIES / SANDSTONE",
     price: "$210",
     tag: "BESTSELLER",
-    image:
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff",
+    image: "https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg",
   },
   {
     name: "URBAN SERIES / OBSIDIAN BLACK",
     desc: "CITY / OBSIDIAN",
     price: "$185",
     tag: "NEW DROP",
-    image:
-      "https://images.unsplash.com/photo-1519741497674-611481863552",
+    image: "https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg",
   },
   {
     name: "SAVANNA SCOUT PRO",
     desc: "HERITAGE SERIES / SIENNA CLAY",
     price: "$245",
     tag: "SUSTAINABLE",
-    image:
-      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519",
+    image: "https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg",
   },
-
   {
     name: "GLACIER RUNNER V2",
     desc: "PERFORMANCE SERIES / ICE GREY",
     price: "$199",
     tag: "TRENDING",
     image:
-      "https://plus.unsplash.com/premium_photo-1663127429325-3acefe582da5?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c3BvcnQlMjBzaG9lc3xlbnwwfHwwfHx8MA%3D%3D",
+      "https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg",
   },
 ];
 
@@ -42,87 +38,123 @@ const TrendingNow = () => {
 
   const scroll = (direction) => {
     if (scrollRef.current) {
+      // Scroll by one card width dynamically
+      const card = scrollRef.current.querySelector("[data-card]");
+      const scrollAmount = card ? card.offsetWidth + 24 : 320;
       scrollRef.current.scrollBy({
-        left: direction === "left" ? -300 : 300,
+        left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
       });
     }
   };
 
   return (
-    <section className="bg-black text-white px-6 md:px-16 py-12 md:py-20">
-      
-     <div className="container m-auto">
-       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="text-2xl tracking-wide md:text-5xl font-bold">
-          FEATURED EXPEDITIONS
-        </h2>
+    <section className="bg-black text-white px-4 sm:px-8 md:px-12 lg:px-16 py-10 sm:py-14 lg:py-20">
+      <div className="container mx-auto">
 
-        {/* Arrows */}
-        <div className="hidden md:flex gap-3">
-          <button
-            onClick={() => scroll("left")}
-            className="w-10 h-10 border border-gray-600 flex items-center justify-center rounded-full hover:bg-white hover:text-black transition"
-          >
-            <ChevronLeft size={20} />
-          </button>
-
-          <button
-            onClick={() => scroll("right")}
-            className="w-10 h-10 border border-gray-600 flex items-center justify-center rounded-full hover:bg-white hover:text-black transition"
-          >
-            <ChevronRight size={20} />
-          </button>
-        </div>
-      </div>
-
-      {/* Slider */}
-      <div
-        ref={scrollRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide"
-      >
-        {products.map((item, index) => (
-          <div
-            key={index}
-            className="min-w-[260px] md:min-w-[300px] flex-shrink-0"
-          >
-            {/* Card */}
-            <div className="relative rounded-[4px] md:h-[330px] md:w-[430px]  overflow-hidden bg-neutral-900 group hover:scale-105 transition duration-300">
-              
-              {/* Tag */}
-              {item.tag && (
-                <span className="absolute top-3 right-3 text-sm font-semibold text-white bg-orange-400 text-black px-2 py-1 rounded">
-                  {item.tag}
-                </span>
-              )}
-
-              {/* Image */}
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-              />
-            </div>
-
-            {/* Info */}
-            <div className="mt-3">
-              <div className="flex justify-between items-center">
-                <h3 className="text-sm md:text-xl font-semibold">
-                  {item.name}
-                </h3>
-                <span className="text-sm md:text-xl font-semibold tracking-wide text-orange-400">
-                  {item.price}
-                </span>
-              </div>
-              <p className="text-xs md:text-[16px] text-gray-400">
-                {item.desc}
-              </p>
-            </div>
+        {/* Header */}
+        <div className="flex items-center justify-between mb-6 sm:mb-8">
+          <div>
+            <p className="text-xs tracking-widest text-gray-400 uppercase mb-1">
+              Top Picks
+            </p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide">
+              FEATURED EXPEDITIONS
+            </h2>
           </div>
-        ))}
+
+          {/* Arrows — visible on all screen sizes */}
+          <div className="flex gap-2 sm:gap-3">
+            <button
+              onClick={() => scroll("left")}
+              className="w-8 h-8 sm:w-10 sm:h-10 border border-gray-600 flex items-center justify-center rounded-full hover:bg-white hover:text-black transition-all duration-200 flex-shrink-0"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft size={16} className="sm:hidden" />
+              <ChevronLeft size={20} className="hidden sm:block" />
+            </button>
+            <button
+              onClick={() => scroll("right")}
+              className="w-8 h-8 sm:w-10 sm:h-10 border border-gray-600 flex items-center justify-center rounded-full hover:bg-white hover:text-black transition-all duration-200 flex-shrink-0"
+              aria-label="Scroll right"
+            >
+              <ChevronRight size={16} className="sm:hidden" />
+              <ChevronRight size={20} className="hidden sm:block" />
+            </button>
+          </div>
+        </div>
+
+        {/*
+          Slider cards:
+            mobile  : ~78vw wide, 220px tall
+            sm      : 280px wide, 280px tall
+            md      : 320px wide, 320px tall
+            lg      : 380px wide, 380px tall
+        */}
+        <div
+          ref={scrollRef}
+          className="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
+        >
+          {products.map((item, index) => (
+            <div
+              key={index}
+              data-card
+              className="
+                flex-shrink-0
+                w-[78vw]
+                sm:w-[280px]
+                md:w-[320px]
+                lg:w-[480px]
+              "
+            >
+              {/* Card image */}
+              <div
+                className="
+                  relative rounded-[4px] overflow-hidden bg-neutral-900 group
+                  h-[220px]
+                  sm:h-[280px]
+                  md:h-[320px]
+                  lg:h-[380px]
+                  hover:scale-[1.02] transition duration-300
+                "
+              >
+                {/* Tag */}
+                {item.tag && (
+                  <span className="absolute top-3 right-3 z-10 text-[10px] sm:text-xs font-semibold text-black bg-orange-400 px-2 py-0.5 sm:py-1 rounded">
+                    {item.tag}
+                  </span>
+                )}
+
+                {/* Image */}
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                />
+
+                {/* Bottom gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition duration-300" />
+              </div>
+
+              {/* Info */}
+              <div className="mt-3 sm:mt-4">
+                <div className="flex justify-between items-start gap-2">
+                  <h3 className="text-sm sm:text-base lg:text-lg font-semibold leading-tight">
+                    {item.name}
+                  </h3>
+                  <span className="text-sm sm:text-base lg:text-lg font-semibold tracking-wide text-orange-400 flex-shrink-0">
+                    {item.price}
+                  </span>
+                </div>
+                <p className="text-[11px] sm:text-xs lg:text-sm text-gray-400 mt-0.5">
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
-     </div>
     </section>
   );
 };

@@ -1,10 +1,13 @@
-import { Button } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, increaseQty, decreaseQty } from "../redux/cartSlice";
-import Navbar from "../components/layout/Navbar";
+import {
+  removeFromCart,
+  increaseQty,
+  decreaseQty,
+  clearCart,
+} from "../redux/cartSlice";
 import { notification } from "antd";
-import { message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { ShoppingBag, Truck, ShieldCheck, X, ChevronLeft } from "lucide-react";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -16,125 +19,211 @@ export default function Cart() {
     0,
   );
 
-  const shipping = 450;
-  const total = subtotal + shipping;
+  const total = subtotal;
 
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen bg-black text-white p-8">
-        {/* Heading */}
-        <h1 className="text-3xl font-bold mb-2">Your Vault</h1>
-        <p className="text-gray-400 mb-8">Reserved items for your journey.</p>
+    <div className="min-h-screen bg-black text-white">
+      <div className="mx-auto container px-4 sm:px-8 md:px-12 lg:px-16 py-8 sm:py-12 lg:py-16">
+        {/* Header */}
+        <div className="mb-6 sm:mb-10">
+          <p className="text-md text-gray-100 uppercase mb-1">Your Vault</p>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wide">
+            TOTAL CART{""}
+            <span className="text-orange-400 text-lg sm:text-xl font-semibold">
+              ({cartItems.length})
+            </span>
+          </h1>
+        </div>
 
-        <div className="grid grid-cols-3 gap-6">
-          {/* LEFT SIDE (Cart Items) */}
-          <div className="col-span-2 space-y-4">
-            {cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="bg-[#111] p-4 rounded-lg flex justify-between items-center"
-              >
-                {/* Product Info */}
-                <div className="flex gap-4 items-center">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-24 h-24 object-cover rounded-md"
-                  />
+        {cartItems.length === 0 ? (
+          /* ── Empty State ── */
+          <div className="flex flex-col items-center justify-center py-24 text-center gap-4">
+            <ShoppingBag size={48} className="text-white/10" />
+            <p className="text-white/30 text-sm tracking-widest uppercase">
+              Your vault is empty
+            </p>
+            <button
+              onClick={() => navigate("/products")}
+              className="mt-2 text-xs tracking-[0.2em] uppercase text-orange-400 border border-orange-400/30 px-5 py-2 hover:bg-orange-400/10 transition rounded-sm"
+            >
+              Explore Products →
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
+            {/* ── LEFT: Cart Items ── */}
+            <div className="w-full lg:flex-1 space-y-3 sm:space-y-4">
+              {cartItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-[#111] rounded-[4px] overflow-hidden flex gap-0"
+                >
+                  {/* Image */}
+                  <div
+                    className="w-24 sm:w-32 md:w-36 flex-shrink-0 cursor-pointer"
+                    onClick={() => navigate(`/product/${item.id}`)}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover hover:scale-105 transition duration-500"
+                      style={{ minHeight: "110px" }}
+                    />
+                  </div>
 
-                  <div>
-                    <p className="text-xs text-orange-400 uppercase">
-                      Performance Series
-                    </p>
-                    <h3 className="text-lg font-semibold">{item.name}</h3>
-                    <p className="text-gray-400 text-sm">Premium Gear</p>
+                  {/* Info */}
+                  <div className="flex w-full flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 md:p-5 gap-3">
+                    <div className="flex flex-col">
+                      <div>
+                        <h3 className="text-sm sm:text-2xl font-semibold pr-2">
+                          {item.name}
+                        </h3>
+                      </div>
 
-                    {/* Qty Controls */}
-                    <div className="flex items-center gap-2 mt-2">
-                      <Button
-                        onClick={() => dispatch(decreaseQty(item.id))}
-                        className="px-3 py-1 bg-[#222] rounded"
-                      >
-                        -
-                      </Button>
-                      <span>{item.quantity}</span>
-                      <Button
-                        onClick={() => dispatch(increaseQty(item.id))}
-                        className="px-3 py-1 bg-[#222] rounded"
-                      >
-                        +
-                      </Button>
+                      <p className="text-[15px] text-gray-500 mt-1 mb-2">
+                        {item.description ||
+                          "Engineered for explorers. Built with durability and comfort to handle every terrain."}
+                      </p>
 
-                      <Button
-                        onClick={() => {
-                          console.log("Item Reemoved");
-                          dispatch(removeFromCart(item.id));
-                          notification.warning({
-                            message: "Item Removed",
-                            description: "Removed from cart",
-                          });
-                        }}
-                        className="text-gray-400 text-sm ml-3 hover:text-red-500"
+                      <span className="border-1 w-[100px] text-center border-gray-600 rounded-[4px] px-2 py-1">
+                        {item.category}
+                      </span>
+
+                      {/* Qty controls */}
+                      <div className="flex items-center gap-2 mt-3">
+                        <button
+                          onClick={() => dispatch(decreaseQty(item.id))}
+                          className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-sm text-sm transition"
+                        >
+                          -
+                        </button>
+                        <span className="w-6 text-center text-sm font-semibold tabular-nums">
+                          {item.quantity}
+                        </span>
+                        <button
+                          onClick={() => dispatch(increaseQty(item.id))}
+                          className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-sm text-sm transition"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col justify-between h-full">
+                      {/* Price */}
+                      <p className="text-base sm:text-lg font-bold text-orange-400 flex-shrink-0 tabular-nums">
+                        ₹{(item.price * item.quantity).toLocaleString()}
+                      </p>
+
+                      {/* Remove */}
+                      <button
+                        onClick={() => dispatch(removeFromCart(item.id))}
+                        className="text-white/20 border-1 px-3 py-1 rounded-[4px] hover:text-red-400 transition mt-0.5"
+                        aria-label="Remove item"
                       >
                         Remove
-                      </Button>
+                      </button>
                     </div>
                   </div>
                 </div>
+              ))}
 
-                {/* Price */}
-                <p className="text-lg font-semibold">
-                  ₹ {item.price * item.quantity}
-                </p>
+              <div className="w-full flex flex-col justify-end">
+                {/* Clear cart */}
+                <button
+                  onClick={() => dispatch(clearCart())}
+                  className="text-[13px] text-end tracking-widest uppercase text-white/50 hover:text-red-400 transition mt-2"
+                >
+                  Clear Vault
+                </button>
               </div>
-            ))}
+            </div>
+
+            {/* ── RIGHT: Order Summary ── */}
+            <div className="w-full lg:w-[340px] xl:w-[380px] flex-shrink-0">
+              <div className="bg-[#111] rounded-[4px] p-5 sm:p-6">
+                <h2 className="text-xl tracking-[0.25em] uppercase text-gray-400 mb-5">
+                  Order Summary
+                </h2>
+
+                {/* Line items */}
+                <div className="space-y-3 text-md">
+                  <div className="flex justify-between text-gray-400">
+                    <span>
+                      Subtotal{" "}
+                      <span className="text-white/20 text-md">
+                        ({cartItems.length} item
+                        {cartItems.length > 1 ? "s" : ""})
+                      </span>
+                    </span>
+                    <span className="text-white tabular-nums">
+                      ₹{subtotal.toLocaleString()}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between text-gray-400">
+                    <span>Shipping</span>
+                    <span className="text-green-400 text-xs font-semibold tracking-wide">
+                      FREE
+                    </span>
+                  </div>
+                </div>
+
+                <div className="border-t border-white/5 my-5" />
+
+                {/* Total */}
+                <div className="flex justify-between items-baseline">
+                  <span className="text-2xl font-semibold tracking-wide">
+                    Total
+                  </span>
+                  <span className="text-xl sm:text-2xl font-bold text-orange-400 tabular-nums">
+                    ₹{total.toLocaleString()}
+                  </span>
+                </div>
+
+                {/* Checkout Button */}
+                <button
+                  onClick={() => navigate("/checkout")}
+                  className="mt-6 w-full overflow-hidden
+                    flex items-center justify-center gap-2
+                    py-3.5 rounded-[4px]
+                    text-white font-bold text-[14px] tracking-wider uppercase
+                    bg-orange-400 cursor-pointer"
+                >
+                  {/* Shimmer */}
+                  <span className="pointer-events-none inset-0" />
+                  Order Complete →
+                </button>
+
+                {/* Trust badges */}
+                <div className="mt-5 space-y-2.5">
+                  <div className="flex items-center gap-2.5 text-[13px] text-white/30">
+                    <ShieldCheck
+                      size={13}
+                      className="text-orange-400/60 flex-shrink-0"
+                    />
+                    Secure encrypted checkout
+                  </div>
+                  <div className="flex items-center gap-2.5 text-[13px] text-white/30">
+                    <Truck
+                      size={13}
+                      className="text-orange-400/60 flex-shrink-0"
+                    />
+                    Arrives in 3–5 business days
+                  </div>
+                </div>
+              </div>
+
+              <button
+                onClick={() => navigate("/products")}
+                className="flex items-center gap-1.5 text-xs tracking-widest text-gray-400 hover:text-white uppercase transition mt-4"
+              >
+                <ChevronLeft size={13} /> Continue Shopping
+              </button>
+            </div>
           </div>
-
-          {/* RIGHT SIDE (Summary) */}
-          <div className="bg-[#111] p-6 rounded-xl">
-            <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-
-            <div className="space-y-2 text-gray-400">
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span>₹ {subtotal}</span>
-              </div>
-
-              <div className="flex justify-between">
-                <span>Shipping</span>
-                <span className="text-orange-400">₹ {shipping}</span>
-              </div>
-            </div>
-
-            <div className="border-t border-gray-700 my-4"></div>
-
-            <div className="flex justify-between text-lg font-bold">
-              <span>Total</span>
-              <span className="text-orange-500">₹ {total}</span>
-            </div>
-
-            <Button
-              onClick={() => {
-                console.log("clicked")
-                navigate("/checkout");
-              }}
-              type="primary"
-              className="w-full mt-4 !bg-orange-500 !border-none h-10"
-            >
-              Processed to CHECKOUT
-            </Button>
-
-            <p className="text-xs text-gray-500 mt-3 text-center">
-              Secure checkout guaranteed
-            </p>
-
-            <div className="mt-4 bg-[#1a1a1a] text-center p-3 rounded text-sm text-yellow-400">
-              Free shipping unlocked 🚀
-            </div>
-          </div>
-        </div>
+        )}
       </div>
-    </>
+    </div>
   );
 }

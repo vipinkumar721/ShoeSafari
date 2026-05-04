@@ -7,10 +7,15 @@ const StorySection = () => {
         {/* LEFT - Image Card */}
         <div className="relative rounded-[4px] overflow-hidden group">
           <img
-            src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429"
+            src="https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg"
             alt="Hiking boots"
             className="w-full h-[400px] md:h-[500px] object-cover group-hover:scale-105 transition duration-500"
           />
+          {/* <img
+            src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429"
+            alt="Hiking boots"
+            className="w-full h-[400px] md:h-[500px] object-cover group-hover:scale-105 transition duration-500"
+          /> */}
 
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70"></div>

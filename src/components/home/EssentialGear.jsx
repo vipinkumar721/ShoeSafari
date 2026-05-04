@@ -7,16 +7,15 @@ const categories = [
     title: "Sneakers",
     subtitle: "Engineered for everyday explorers.",
     cta: "EXPLORE SNEAKERS →",
-    image:
-      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519",
-    className: "md:col-span-2 md:row-span-1",
+    image: "https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg",
+    // sm: spans 2 cols (2-col grid), lg: spans 2 of 3 cols
+    className: "sm:col-span-2 lg:col-span-2 lg:row-span-1",
   },
   {
     title: "CASUAL ESSENTIALS",
     subtitle: "Effortless style for every step.",
     cta: "DISCOVER →",
-    image:
-      "https://images.unsplash.com/photo-1549298916-b41d501d3772",
+    image: "https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg",
     className: "",
   },
   {
@@ -24,7 +23,7 @@ const categories = [
     subtitle: "Built for speed, endurance, and power.",
     cta: "TRAIN HARD →",
     image:
-      "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHNob2VzfGVufDB8fDB8fHww",
+      "https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg",
     className: "",
   },
   {
@@ -32,74 +31,91 @@ const categories = [
     subtitle: "Luxury meets durability.",
     cta: "VIEW COLLECTION →",
     image:
-      "https://images.unsplash.com/photo-1518002171953-a080ee817e1f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    className: "md:col-span-2",
+      "https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg",
+    // sm: spans 2 cols, lg: spans 2 of 3 cols
+    className: "sm:col-span-2 lg:col-span-2",
   },
 ];
 
 const EssentialGear = () => {
-
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   return (
-    <section className="bg-black text-white px-6 md:px-16 py-12 md:py-20">
-     <div className="m-auto container">
-       {/* Heading */}
-      <div className="mb-10 flex justify-between items-end">
-        <div>
-          <p className="text-md tracking-widest text-gray-400">CURATED COLLECTION</p>
-        <h2 className="text-2xl tracking-wide md:text-5xl font-bold">
-          ESSENTIAL GEAR
-        </h2>
-        </div>
+    <section className="bg-black text-white px-4 sm:px-8 md:px-12 lg:px-16 py-10 md:py-16 lg:py-20">
+      <div className="mx-auto container">
 
-        <div>
-          <Button
+        {/* Heading — stacks on mobile, side-by-side on sm+ */}
+        <div className="mb-8 md:mb-10 flex flex-col gap-4 sm:flex-row sm:justify-between sm:items-end">
+          <div>
+            <p className="text-xs sm:text-sm tracking-widest text-gray-400 uppercase mb-1">
+              Curated Collection
+            </p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide">
+              ESSENTIAL GEAR
+            </h2>
+          </div>
+
+          <div className="self-start sm:self-auto">
+            <Button
               type="primary"
               size="large"
-              className="!bg-[#d3582b] !rounded-[4px] !border-none !text-white !font-semibold hover:bg-orange-600 hover:scale-105 transition-all duration-300 ease-in-out transform"
+              className="!bg-[#d3582b] !rounded-[4px] !border-none !text-white !font-semibold hover:!bg-orange-600 hover:scale-105 transition-all duration-300 ease-in-out transform text-sm sm:text-base"
               onClick={() => navigate("/products")}
             >
               VIEW ALL GEAR →
             </Button>
-        </div>
-      </div>
-
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[200px] md:auto-rows-[380px]">
-        {categories.map((item, index) => (
-          <div
-            key={index}
-            className={`relative rounded-[4px] overflow-hidden group ${item.className}`}
-          >
-            {/* Image */}
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-            />
-
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-
-            {/* Content */}
-            <div className="absolute bottom-4 left-4 right-4">
-              <h3 className="text-lg md:text-xl font-semibold">
-                {item.title}
-              </h3>
-              {item.subtitle && (
-                <p className="text-sm text-gray-300 mb-2">
-                  {item.subtitle}
-                </p>
-              )}
-              <button className="text-xs tracking-wide text-white/80 hover:text-white">
-                {item.cta}
-              </button>
-            </div>
           </div>
-        ))}
+        </div>
+
+        {/* 
+          Grid layout:
+            mobile  (default) : 1 column,  row height 220px
+            sm      (640px+)  : 2 columns, row height 260px  → Sneakers & Premium span 2 cols
+            lg      (1024px+) : 3 columns, row height 360px  → Sneakers & Premium span 2 of 3 cols
+        */}
+        <div className="
+          grid gap-5 sm:gap-4 md:gap-5 lg:gap-6
+          grid-cols-1
+          auto-rows-[220px]
+          sm:grid-cols-2
+          sm:auto-rows-[260px]
+          lg:grid-cols-3
+          lg:auto-rows-[360px]
+        ">
+          {categories.map((item, index) => (
+            <div
+              key={index}
+              className={`relative rounded-[4px] overflow-hidden group cursor-pointer ${item.className}`}
+            >
+              {/* Image */}
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+              />
+
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+
+              {/* Content */}
+              <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4">
+                <h3 className="text-base sm:text-lg md:text-xl font-semibold leading-tight">
+                  {item.title}
+                </h3>
+                {item.subtitle && (
+                  <p className="text-xs sm:text-sm text-gray-300 mt-0.5 mb-1.5 sm:mb-2">
+                    {item.subtitle}
+                  </p>
+                )}
+                <button className="text-[11px] sm:text-xs tracking-wide text-white/80 hover:text-white transition-colors duration-200">
+                  {item.cta}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
-     </div>
     </section>
   );
 };

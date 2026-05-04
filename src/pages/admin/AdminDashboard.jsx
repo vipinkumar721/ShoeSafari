@@ -12,7 +12,6 @@ const AdminDashboard = () => {
 
   return (
     <>
-      <Navbar />
       <div className="flex h-screen">
         <aside className="w-[16%] bg-[#121212] text-[#c7a17a] flex flex-col p-4">
           <div className="bg-[#1e1e1e] p-3 rounded-xl flex items-center gap-3 mb-6">
@@ -43,6 +42,15 @@ const AdminDashboard = () => {
                 <Package />
               </span>
               <span className="text-sm font-medium">Add Product</span>
+            </button>
+            <button
+              onClick={() => navigate("/adminDashboard/orders")}
+              className="flex items-center gap-3 px-3 py-3 rounded-lg cursor-pointer transition-all hover:bg-[#1e1e1e] bg-[#2a2a2a] border-r-4 border-orange-500 text-white"
+            >
+              <span>
+                <Package />
+              </span>
+              <span className="text-sm font-medium">Orders</span>
             </button>
           </div>
         </aside>

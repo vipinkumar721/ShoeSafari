@@ -4,15 +4,17 @@ import { db } from "../config/firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../redux/cartSlice";
 
 export default function Checkout() {
-const cart = useSelector((state) => state.cart.cartItems);
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.cartItems);
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
-    0
+    0,
   );
 
   const shipping = 450;
@@ -28,6 +30,7 @@ const cart = useSelector((state) => state.cart.cartItems);
       });
 
       alert("Order placed successfully ✅");
+      dispatch(clearCart());
       navigate("/products");
     } catch (error) {
       alert(error.message);
@@ -46,11 +49,7 @@ const cart = useSelector((state) => state.cart.cartItems);
 
       <h3 className="mt-4 font-bold">Total: ₹ {total}</h3>
 
-      <Button
-        type="primary"
-        className="mt-4"
-        onClick={handleOrder}
-      >
+      <Button type="primary" className="mt-4" onClick={handleOrder}>
         Place Order
       </Button>
     </div>

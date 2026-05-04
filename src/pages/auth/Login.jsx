@@ -59,7 +59,7 @@ const Login = () => {
     <div className="h-screen flex" style={{ background: "#1a1a1a" }}>
       {/* Left Panel */}
       <div className="w-[60%] hidden md:flex items-center justify-center">
-        <img className="h-full w-full object-cover" src={login_banner} alt="" />
+        <img className="h-full w-full object-cover" src={login_baanner} alt="" />
       </div>
 
       {/* Right Panel */}

@@ -46,7 +46,6 @@ const Products = () => {
 
   return (
     <>
-      <Navbar />
       <section className="bg-black text-white px-6 md:px-16 py-12 md:py-20">
         <div className="m-auto container">
           {/* Header */}
@@ -100,51 +99,72 @@ const Products = () => {
                     hoverable
                     cover={
                       <img
-                        onClick={() => {
-                          navigate(`/product/${item.id}`);
-                        }}
+                        onClick={() => navigate(`/product/${item.id}`)}
                         src={item.image}
                         alt={item.name}
-                        className="w-full h-[350px] object-cover group-hover:scale-105 transition duration-500"
+                        className="w-full h-[350px] object-cover group-hover:scale-105 transition duration-500 cursor-pointer"
                       />
                     }
-                    className="bg-neutral-900 rounded-[4px] overflow-hidden group w-[350px]"
+                    className="!bg-neutral-900 relative !rounded-[4px] !border-0 overflow-hidden group w-[350px]"
                   >
                     {/* Info */}
-                    <div className="">
+                    <div className="text-white">
                       <div className="flex justify-between items-center">
                         <h3 className="text-sm md:text-xl font-semibold">
                           {item.name}
                         </h3>
-                        <span className="text-sm md:text-xl font-semibold tracking-wide text-orange-400">{`₹${item.price}`}</span>
+                        <span className="text-sm md:text-xl font-semibold tracking-wide text-orange-400">
+                          ₹{item.price}
+                        </span>
                       </div>
                       <p className="text-xs md:text-[16px] text-gray-400 h-11 my-2">
                         {item.description}
                       </p>
 
                       {/* Tags */}
-                      <div className="flex gap-2 mt-3">
-                        <span className="text-md font-bold text-white bg-orange-400 text-black px-2 py-1 rounded">
-                          {item.discount
-                            ? `${item.discount}% OFF`
-                            : "No Discount"}
-                        </span>
-                        <span className="text-md font-bold text-white bg-orange-400 text-black px-2 py-1 rounded">
+                      <div className="flex gap-2 mt-3 flex-wrap items-center">
+                        {item.discount ? (
+                          <span className="absolute top-3 left-3 text-[15px] font-bold bg-orange-400 px-2 py-1 rounded-[4px]">
+                            −{item.discount}% OFF
+                          </span>
+                        ) : null}
+                        <span className="absolute bottom-53 right-3 bg-orange-400 text-[13px] font-semibold  border-1 border-orange-400/40 px-3 py-1 rounded-[4px]">
                           {item.category}
                         </span>
-                        <Button
-                          onClick={() => {
-                            console.log("ADDING:", item);
-                            dispatch(addToCart(item));
-                            notification.success({
-                              message: "Success",
-                              description: "Added in cart",
-                            });
-                          }}
-                        >
-                          Add to Cart
-                        </Button>
                       </div>
+
+                      <button
+                        onClick={() => {
+                          dispatch(addToCart(item));
+                          notification.success({
+                            message: "Added to Cart",
+                            description: item.name,
+                          });
+                        }}
+                        className="relative mt-4 w-full overflow-hidden flex items-center justify-center gap-2 px-6 py-3 rounded-[3px] font-bold text-[13px] uppercase bg-orange-400 cursor-pointer"
+                      >
+                        <span
+                          className="pointer-events-none absolute inset-0"
+                        />
+                        {/* Cart icon */}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="15"
+                          height="15"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="transition-transform duration-300 group-hover/btn:-rotate-12"
+                        >
+                          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                          <line x1="3" y1="6" x2="21" y2="6" />
+                          <path d="M16 10a4 4 0 0 1-8 0" />
+                        </svg>
+                        Add to Cart
+                      </button>
                     </div>
                   </Card>
                 ))}

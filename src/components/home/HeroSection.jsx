@@ -6,10 +6,15 @@ const HeroSection = () => {
     <div className="relative w-full h-[80vh] md:h-screen overflow-hidden">
       {/* Background Image */}
       <img
-        src="https://images.unsplash.com/photo-1554176259-aa961fc32671?q=80&w=818&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg"
         alt="Desert"
         className="absolute inset-0 w-full h-full object-cover"
       />
+      {/* <img
+        src="https://images.unsplash.com/photo-1554176259-aa961fc32671?q=80&w=818&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        alt="Desert"
+        className="absolute inset-0 w-full h-full object-cover"
+      /> */}
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>

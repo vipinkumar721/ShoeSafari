@@ -10,6 +10,8 @@ import ProductList from "./pages/admin/ProductList";
 import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
+import Orders from "./pages/admin/Orders";
+import Layout from "./components/Layout";
 
 const App = () => {
   return (
@@ -22,10 +24,24 @@ const App = () => {
             path="/"
             element={
               <ProtectedRoute>
-                <Dashboard />
+                <Layout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route index element={<Dashboard />} />
+            <Route
+              path="/products"
+              element={
+                <ProtectedRoute>
+                  <Products />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/cart" element={<Cart />} />
+            <Route path="product/:id" element={<ProductDetail />} />
+            <Route path="/checkout" element={<Checkout />} />
+          </Route>
           <Route
             path="/adminDashboard"
             element={
@@ -36,18 +52,8 @@ const App = () => {
           >
             <Route path="addProduct" element={<AddProduct />} />
             <Route path="product-list" element={<ProductList />} />
+            <Route path="orders" element={<Orders />} />
           </Route>
-          <Route
-            path="/products"
-            element={
-              <ProtectedRoute>
-                <Products />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="product/:id" element={<ProductDetail/>}/>
-          <Route path="/checkout" element={<Checkout/>}/>
         </Routes>
       </BrowserRouter>
     </>
