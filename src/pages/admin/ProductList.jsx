@@ -129,11 +129,17 @@ const ProductList = () => {
     {
       title: "Actions",
       render: (_, record) => (
-        <div style={{ display: "flex", gap: "8px" }}>
-          <Button type="primary" onClick={() => showModal(record)}>
+        <div style={{ display: "flex", gap: "12px" }}>
+          <Button
+            onClick={() => showModal(record)}
+            className="!bg-[#d3582b] !rounded-[4px] !px-8 !border-none !text-white !font-semibold hover:bg-orange-600 hover:scale-105 transition-all duration-300 ease-in-out transform"
+          >
             Edit
           </Button>
-          <Button danger onClick={() => handleDelete(record.id)}>
+          <Button
+            onClick={() => handleDelete(record.id)}
+            className="!bg-transparent !rounded-[4px] !px-8 !border-gray-500 !text-black !font-semibold hover:scale-105 transition-all duration-300 ease-in-out transform"
+          >
             Delete
           </Button>
         </div>
@@ -161,14 +167,14 @@ const ProductList = () => {
       </div>
 
       <Modal
-        title=""
         open={open}
         onOk={handleOk}
+        footer={null}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
+        className="custom-modal"
       >
-        <p>{modalText}</p>
-        <div className="w-full max-w-3xl bg-[#1a1a1a] rounded-xl p-6 shadow-lg">
+        <div className="w-full max-w-3xl !bg-[#1a1a1a] rounded-xl p-6 shadow-lg">
           {/* Header */}
           <h2 className="text-white text-lg font-semibold border-l-4 border-orange-500 pl-3 mb-6">
             EDIT PRODUCT DETAILS
@@ -290,6 +296,7 @@ const ProductList = () => {
 
             <div className="flex justify-end gap-3 mt-6">
               <Button
+              onClick={handleCancel}
                 type="primary"
                 size="large"
                 className="!bg-transparent !rounded-[4px] !border-gray-500 !text-white !font-semibold hover:scale-105 transition-all duration-300 ease-in-out transform"
@@ -297,6 +304,7 @@ const ProductList = () => {
                 DISCARD
               </Button>
               <Button
+                loading={confirmLoading}
                 type="primary"
                 size="large"
                 htmlType="submit"

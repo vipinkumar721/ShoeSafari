@@ -31,12 +31,7 @@ export default function ProductDetail() {
     <div className="bg-black text-white p-8 grid md:grid-cols-2 gap-8">
 
       {/* LEFT IMAGE */}
-      <div className=" p-4 rounded-xl">
-        {/* <img
-          src={product.image}
-          alt={product.name}
-          className="rounded-xl w-full object-cover"
-        /> */}
+      <div className="p-4">
         <Image
           className="rounded-[4px] w-full object-cover"
           alt={product.name}
@@ -45,38 +40,44 @@ export default function ProductDetail() {
       </div>
 
       {/* RIGHT DETAILS */}
-      <div className="space-y-5">
+      <div className="space-y-6 p-4">
 
         {/* Tag */}
-        <p className="text-xs text-orange-400 uppercase tracking-wide">
+        <p className="text-sm text-orange-400 uppercase tracking-wide">
           Limited Edition
         </p>
 
         {/* Title */}
-        <h1 className="text-3xl font-bold leading-tight">
+        <h1 className="text-5xl font-bold leading-tight">
           {product.name}
         </h1>
 
         {/* Price */}
-        <p className="text-2xl text-orange-500 font-semibold">
+        <p className="text-3xl text-orange-500 font-semibold">
           ₹ {product.price}
         </p>
 
         {/* Description */}
-        <p className="text-gray-400 text-sm leading-relaxed">
+        <p className="text-gray-400 text-xl leading-relaxed">
           {product.description ||
             "Engineered for explorers. Built with durability and comfort to handle every terrain."}
         </p>
 
         {/* Features */}
-        <div className="flex gap-4 text-xs text-gray-400">
+        <div className="flex gap-4 text-md text-gray-400">
           <span>✔ Sustainable Build</span>
           <span>✔ Lifetime Durability</span>
         </div>
 
-
         {/* Secondary Button */}
-        <button className="w-full border border-gray-700 py-3 rounded-lg text-gray-400 hover:text-white">
+        <button onClick={() => {
+          dispatch(addToCart(product));
+          notification.success({
+            title: "Added to cart",
+            description:product.name,
+            
+          })
+        }} className="py-2 px-5 text-lg rounded-[4px] !bg-[#d3582b] hover:scale-105 transition duration-500 cursor-pointer">
           ADD TO CART
         </button>
 

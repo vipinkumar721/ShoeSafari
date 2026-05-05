@@ -13,24 +13,24 @@ const AdminDashboard = () => {
     {
       label: "All Product",
       icon: <Boxes size={18} />,
-      path: "/adminDashboard/product-list",
+      path: "/admin/product-list",
     },
     {
       label: "Add Product",
       icon: <Package size={18} />,
-      path: "/adminDashboard/addProduct",
+      path: "/admin/addProduct",
     },
     {
       label: "Orders",
       icon: <Package size={18} />,
-      path: "/adminDashboard/orders",
+      path: "/admin/orders",
     },
   ];
 
   return (
     <div className="flex h-screen bg-[#0f172a] text-white">
       
-      {/* 🔥 Mobile Overlay */}
+      {/* Mobile Overlay */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 bg-black/50 z-40 md:hidden"
@@ -38,7 +38,7 @@ const AdminDashboard = () => {
         />
       )}
 
-      {/* 🔥 Sidebar */}
+      {/* Sidebar */}
       <aside
         className={`
           fixed md:static z-50 top-0 left-0 h-full
@@ -69,7 +69,7 @@ const AdminDashboard = () => {
                 navigate(item.path);
                 setSidebarOpen(false);
               }}
-              className="flex items-center gap-3 px-3 py-3 rounded-lg cursor-pointer transition-all hover:bg-[#1e1e1e] bg-[#2a2a2a] border-r-4 border-orange-500 text-sm"
+              className="flex items-center gap-3 px-3 py-3 rounded-lg cursor-pointer transition-all hover:bg-[#1e1e1e] bg-[#2a2a2a] border-r-4 border-[#d3582b] text-sm"
             >
               {item.icon}
               {item.label}
@@ -78,10 +78,10 @@ const AdminDashboard = () => {
         </div>
       </aside>
 
-      {/* 🔥 Main Content */}
+      {/* Main Content */}
       <div className="flex-1 flex flex-col">
         
-        {/* 🔥 Topbar (Mobile + Tablet) */}
+        {/* Topbar */}
         <div className="md:hidden flex items-center justify-between p-4 bg-[#1e293b]">
           <button onClick={() => setSidebarOpen(true)}>
             <Menu />

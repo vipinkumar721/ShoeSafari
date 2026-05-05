@@ -57,8 +57,12 @@ const Signup = () => {
     <div className="h-screen flex" style={{ background: "#1a1a1a" }}>
       {/* Left Panel */}
       <div className="w-[60%] hidden md:flex items-center justify-center">
-        {/* <img className="h-full w-full object-cover" src={login_bwanner} alt="" /> */}
-        <img className="h-full w-full object-cover" src="https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg" alt="" />
+        <img
+          className="h-full w-full object-cover"
+          src={login_banner}
+          alt=""
+        />
+        {/* <img className="h-full w-full object-cover" src="https://res.cloudinary.com/dwngo5vya/image/upload/q_auto/f_auto/v1777890582/nike_shoe_etvhnc.jpg" alt="" /> */}
       </div>
 
       {/* Right Panel */}

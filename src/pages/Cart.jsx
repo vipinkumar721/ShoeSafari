@@ -38,13 +38,13 @@ export default function Cart() {
         {cartItems.length === 0 ? (
           /* ── Empty State ── */
           <div className="flex flex-col items-center justify-center py-24 text-center gap-4">
-            <ShoppingBag size={48} className="text-white/10" />
-            <p className="text-white/30 text-sm tracking-widest uppercase">
+            <ShoppingBag size={48} className="text-white/20" />
+            <p className="text-white/40 text-sm tracking-widest uppercase">
               Your vault is empty
             </p>
             <button
               onClick={() => navigate("/products")}
-              className="mt-2 text-xs tracking-[0.2em] uppercase text-orange-400 border border-orange-400/30 px-5 py-2 hover:bg-orange-400/10 transition rounded-sm"
+              className="!bg-[#d3582b] !rounded-[4px] !border-none cursor-pointer text-lg px-4 py-2 !text-white !font-semibold hover:bg-orange-600 hover:scale-105 transition-all duration-300 ease-in-out transform"
             >
               Explore Products →
             </button>
@@ -187,7 +187,7 @@ export default function Cart() {
                     flex items-center justify-center gap-2
                     py-3.5 rounded-[4px]
                     text-white font-bold text-[14px] tracking-wider uppercase
-                    bg-orange-400 cursor-pointer"
+                    !bg-[#d3582b] hover:scale-105 transition duration-500 cursor-pointer"
                 >
                   {/* Shimmer */}
                   <span className="pointer-events-none inset-0" />
@@ -208,7 +208,7 @@ export default function Cart() {
                       size={13}
                       className="text-orange-400/60 flex-shrink-0"
                     />
-                    Arrives in 3–5 business days
+                    Arrives in 3-5 business days
                   </div>
                 </div>
               </div>

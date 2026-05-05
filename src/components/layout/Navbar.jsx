@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Tooltip, Button } from "antd";
 import { Search, ShoppingBag, User, Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const NAV_LINKS = [
-  { label: "Home" },
-  { label: "About" },
-  { label: "Products" },
-  { label: "Contact Us" },
+  { label: "Home", to: "/" },
+  { label: "About", to: "" },
+  { label: "Products", to: "/products" },
+  { label: "Contact Us", to: "" },
 ];
 
 const ICON_ACTIONS = [
@@ -15,224 +15,141 @@ const ICON_ACTIONS = [
   { Icon: ShoppingBag, label: "Bag", to: "/cart" },
   { Icon: User, label: "Account", to: "" },
 ];
-const Navbar = () => {
-  const [activeLink, setActiveLink] = useState("");
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleLinkClick = (label) => {
-    setActiveLink(label);
-    setMenuOpen(false);
-  };
+const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
-    <>
-      <nav
-        className="sticky top-0 z-50"
-        style={{
-          background: "#1a1208",
-          borderBottom: "1px solid rgba(255,255,255,0.04)",
-          fontFamily: "'Barlow', sans-serif",
-        }}
-      >
-        <div className="max-w-[1750px] m-auto flex items-center justify-between h-20 px-6 md:px-12">
-          <Link
-            className="text-2xl tracking-widest font-extrabold select-none flex-shrink-0"
-            style={{ color: "#e8734a", fontFamily: "'Montserrat', sans-serif" }}
-          >
-            LOGO
-          </Link>
+    <nav className="bg-[#1a1208]">
+      <div className="max-w-[1750px] m-auto flex items-center justify-between h-20 px-6 md:px-12">
+        {/* LOGO */}
+        <div
+          onClick={() => navigate("/")}
+          className="cursor-pointer text-2xl text-[#e8734a] tracking-widest font-extrabold"
+        >
+          LOGO
+        </div>
 
-          <ul className="hidden md:flex items-center gap-14 list-none m-0 p-0">
-            {NAV_LINKS.map(({ label, to }) => (
+        {/* DESKTOP LINKS */}
+        <ul className="hidden md:flex items-center gap-14">
+          {NAV_LINKS.map(({ label, to }) => {
+            const isActive = location.pathname === to;
+
+            return (
               <li key={label}>
                 <Link
-                  onClick={() => handleLinkClick(label)}
-                  className="relative text-md font-semibold tracking-wide pb-1 transition-colors duration-200 no-underline"
+                  to={to}
+                  className="relative font-semibold pb-1"
                   style={{
-                    color: activeLink === label ? "#e8734a" : "#f0ece4",
-                    letterSpacing: "0.05em",
+                    color: isActive ? "#e8734a" : "#f0ece4",
                   }}
                 >
                   {label}
+
                   <span
                     className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"
                     style={{
                       background: "#e8734a",
-                      width: activeLink === label ? "100%" : "0%",
+                      width: isActive ? "100%" : "0%",
                     }}
                   />
                 </Link>
               </li>
-            ))}
-          </ul>
+            );
+          })}
+        </ul>
 
-          <div className="flex items-center gap-4 flex-shrink-0">
-            <div className="hidden md:flex items-center gap-8">
-              {ICON_ACTIONS.map(({ Icon, label, to }) => {
-                const content = (
-                  <Tooltip
-                    key={label}
-                    title={label}
-                    placement="bottom"
-                    overlayStyle={{ fontSize: 12 }}
+        {/* RIGHT ICONS */}
+        <div className="flex items-center gap-4">
+          {/* DESKTOP ICONS */}
+          <div className="hidden md:flex items-center gap-1">
+            {ICON_ACTIONS.map(({ Icon, label, to }) => (
+              <Tooltip key={label} title={label}>
+                <Link to={to}>
+                  <Button
+                    className="!bg-transparent !border-none hover:scale-110 transition"
+                    style={{ color: "#f0ece4" }}
                   >
-                    <Button
-                      className="flex items-center justify-center !px-0 rounded transition-all duration-200 hover:scale-110"
-                      style={{
-                        color: "#f0ece4",
-                        background: "none",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.color = "#e8734a")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = "#f0ece4")
-                      }
-                    >
-                      <Icon size={20} strokeWidth={1.8} />
-                    </Button>
-                  </Tooltip>
-                );
+                    <Icon size={20} />
+                  </Button>
+                </Link>
+              </Tooltip>
+            ))}
+          </div>
 
-                return to ? (
-                  <Link key={label} to={to}>
-                    {content}
-                  </Link>
-                ) : (
-                  <div key={label}>{content}</div>
-                );
-              })}
-            </div>
+          {/* MOBILE ICONS */}
+          <div className="flex md:hidden items-center gap-3">
+            <Link to="/search">
+              <Search size={20} color="#f0ece4" />
+            </Link>
 
-            <div className="flex md:hidden items-center gap-3">
-              {[
-                { Icon: Search, label: "Search" },
-                { Icon: ShoppingBag, label: "Bag" },
-              ].map(({ Icon, label }) => (
-                <button
-                  key={label}
-                  aria-label={label}
-                  style={{
-                    color: "#f0ece4",
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    padding: 0,
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <Icon size={20} strokeWidth={1.8} />
-                </button>
-              ))}
+            <Link to="/cart">
+              <ShoppingBag size={20} color="#f0ece4" />
+            </Link>
 
-              <button
-                aria-label={menuOpen ? "Close menu" : "Open menu"}
-                onClick={() => setMenuOpen((prev) => !prev)}
-                style={{
-                  color: "#f0ece4",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: "4px",
-                  display: "flex",
-                  alignItems: "center",
-                  transition: "color 0.2s",
-                }}
-              >
-                {menuOpen ? (
-                  <X size={22} strokeWidth={1.8} />
-                ) : (
-                  <Menu size={22} strokeWidth={1.8} />
-                )}
-              </button>
-            </div>
+            <button onClick={() => setMenuOpen(!menuOpen)}>
+              {menuOpen ? (
+                <X size={22} color="#f0ece4" />
+              ) : (
+                <Menu size={22} color="#f0ece4" />
+              )}
+            </button>
           </div>
         </div>
+      </div>
 
-        <div
-          style={{
-            overflow: "hidden",
-            maxHeight: menuOpen ? "400px" : "0px",
-            transition: "max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
-            background: "#1a1208",
-            borderTop: menuOpen ? "1px solid rgba(255,255,255,0.06)" : "none",
-          }}
-        >
-          <ul className="list-none m-0 p-0 flex flex-col">
-            {NAV_LINKS.map(({ label, to }) => (
+      {/* MOBILE MENU */}
+      <div
+        style={{
+          maxHeight: menuOpen ? "400px" : "0px",
+          overflow: "hidden",
+          transition: "0.3s",
+          background: "#1a1208",
+        }}
+      >
+        <ul className="flex flex-col">
+          {NAV_LINKS.map(({ label, to }) => {
+            const isActive = location.pathname === to;
+
+            return (
               <li key={label}>
                 <Link
                   to={to}
-                  onClick={() => handleLinkClick(label)}
+                  onClick={() => setMenuOpen(false)}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    display: "block",
                     padding: "14px 24px",
-                    color: activeLink === label ? "#e8734a" : "#f0ece4",
+                    color: isActive ? "#e8734a" : "#f0ece4",
                     fontWeight: 600,
-                    fontSize: "0.95rem",
-                    letterSpacing: "0.05em",
-                    textDecoration: "none",
-                    borderBottom: "1px solid rgba(255,255,255,0.04)",
-                    background:
-                      activeLink === label
-                        ? "rgba(232,115,74,0.08)"
-                        : "transparent",
-                    transition: "background 0.2s, color 0.2s",
                   }}
                 >
                   {label}
-                  {activeLink === label && (
-                    <span
-                      style={{
-                        width: 6,
-                        height: 6,
-                        borderRadius: "50%",
-                        background: "#e8734a",
-                        display: "inline-block",
-                      }}
-                    />
-                  )}
                 </Link>
               </li>
-            ))}
+            );
+          })}
 
-            <li
+          <li>
+            <Link
+              to="/account"
+              onClick={() => setMenuOpen(false)}
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 24,
+                gap: 10,
                 padding: "14px 24px",
+                color: "#f0ece4",
               }}
             >
-              <button
-                aria-label="Account"
-                style={{
-                  color: "#f0ece4",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  padding: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  fontSize: "0.9rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.04em",
-                }}
-              >
-                <User size={18} strokeWidth={1.8} />
-                Account
-              </button>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </>
+              <User size={18} />
+              Account
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
   );
 };
 

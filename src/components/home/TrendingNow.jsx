@@ -84,13 +84,6 @@ const TrendingNow = () => {
           </div>
         </div>
 
-        {/*
-          Slider cards:
-            mobile  : ~78vw wide, 220px tall
-            sm      : 280px wide, 280px tall
-            md      : 320px wide, 320px tall
-            lg      : 380px wide, 380px tall
-        */}
         <div
           ref={scrollRef}
           className="flex gap-4 sm:gap-5 lg:gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-2"
@@ -120,7 +113,7 @@ const TrendingNow = () => {
               >
                 {/* Tag */}
                 {item.tag && (
-                  <span className="absolute top-3 right-3 z-10 text-[10px] sm:text-xs font-semibold text-black bg-orange-400 px-2 py-0.5 sm:py-1 rounded">
+                  <span className="absolute top-3 right-3 z-10 text-[10px] sm:text-sm font-semibold text-white bg-orange-400 px-3 py-1 rounded-[4px]">
                     {item.tag}
                   </span>
                 )}
@@ -139,10 +132,10 @@ const TrendingNow = () => {
               {/* Info */}
               <div className="mt-3 sm:mt-4">
                 <div className="flex justify-between items-start gap-2">
-                  <h3 className="text-sm sm:text-base lg:text-lg font-semibold leading-tight">
+                  <h3 className="text-sm sm:text-lg lg:text-xl font-semibold leading-tight">
                     {item.name}
                   </h3>
-                  <span className="text-sm sm:text-base lg:text-lg font-semibold tracking-wide text-orange-400 flex-shrink-0">
+                  <span className="text-sm sm:text-lg lg:text-xl font-semibold tracking-wide text-orange-400 flex-shrink-0">
                     {item.price}
                   </span>
                 </div>

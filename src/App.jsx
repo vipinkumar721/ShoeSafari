@@ -18,38 +18,22 @@ const App = () => {
     <>
       <BrowserRouter>
         <Routes>
+
+          {/* Public Routes */}
           <Route path="/Login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Layout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Dashboard />} />
-            <Route
-              path="/products"
-              element={
-                <ProtectedRoute>
-                  <Products />
-                </ProtectedRoute>
-              }
-            />
 
-            <Route path="/cart" element={<Cart />} />
+          {/* User Protected */}
+          <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+            <Route index element={<Dashboard />} />
+            <Route path="products" element={<Products />}/>
+            <Route path="cart" element={<Cart />} />
             <Route path="product/:id" element={<ProductDetail />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route path="checkout" element={<Checkout />} />
           </Route>
-          <Route
-            path="/adminDashboard"
-            element={
-              <ProtectedRoute>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          >
+
+          {/* Admin Protected */}
+          <Route path="/admin" element={<ProtectedRoute><AdminDashboard/></ProtectedRoute>}>
             <Route path="addProduct" element={<AddProduct />} />
             <Route path="product-list" element={<ProductList />} />
             <Route path="orders" element={<Orders />} />

@@ -36,7 +36,7 @@ const Products = () => {
         return {
           id: doc.id,
           ...raw,
-          created: raw.created?.toDate().toISOString(), // ✅ convert
+          created: raw.created?.toDate().toISOString(),
         };
       });
       setProducts(data);
@@ -141,7 +141,7 @@ const Products = () => {
                             description: item.name,
                           });
                         }}
-                        className="relative mt-4 w-full overflow-hidden flex items-center justify-center gap-2 px-6 py-3 rounded-[3px] font-bold text-[13px] uppercase bg-orange-400 cursor-pointer"
+                        className="relative mt-4 w-full overflow-hidden flex items-center justify-center gap-2 px-6 py-3 rounded-[3px] font-bold text-[13px] uppercase !bg-[#d3582b] hover:scale-105 transition duration-500 cursor-pointer"
                       >
                         <span
                           className="pointer-events-none absolute inset-0"

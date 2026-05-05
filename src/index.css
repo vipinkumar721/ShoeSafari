@@ -3,7 +3,40 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+:where(.css-dev-only-do-not-override-ch9ese).ant-modal .ant-modal-container {
+  padding: 0 !important;
+  background-color: #1a1a1a !important;
+}
+
+:where(.css-dev-only-do-not-override-ch9ese).ant-modal-confirm.ant-modal .ant-modal-body {
+  background: #1d1d1d;
+  padding: 20px;
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 4px;
+}
+
+:where(.css-dev-only-do-not-override-ch9ese).ant-btn.ant-btn-color-primary.ant-btn-variant-solid {
+  background-color: #d3582b;
+  border-radius: 4px;
+  border: none;
+  font-size: 15px;
+  padding: 20px 40px;
+  color: white;
+  font-weight: 600;
+}
+
+:where(.css-dev-only-do-not-override-ch9ese).ant-btn.ant-btn-color-primary.ant-btn-variant-solid:hover {
+  background-color: #d3582b;
+  border-radius: 4px;
+  border: none;
+  font-size: 15px;
+  padding: 20px 40px;
+  color: white;
+  font-weight: 600;
 }
