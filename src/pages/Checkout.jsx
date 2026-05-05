@@ -17,8 +17,7 @@ export default function Checkout() {
     0,
   );
 
-  const shipping = 450;
-  const total = subtotal + shipping;
+  const total = subtotal;
 
   const handleOrder = async () => {
     try {

@@ -60,14 +60,13 @@ export default function Cart() {
                 >
                   {/* Image */}
                   <div
-                    className="w-24 sm:w-32 md:w-36 flex-shrink-0 cursor-pointer"
+                    className="w-24 sm:w-32 md:w-46 flex-shrink-0 cursor-pointer"
                     onClick={() => navigate(`/product/${item.id}`)}
                   >
                     <img
                       src={item.image}
                       alt={item.name}
                       className="w-full h-full object-cover hover:scale-105 transition duration-500"
-                      style={{ minHeight: "110px" }}
                     />
                   </div>
 
