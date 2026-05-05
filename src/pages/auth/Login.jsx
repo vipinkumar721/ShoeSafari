@@ -28,7 +28,7 @@ const Login = () => {
 
       const userData = adminSnap.data();
       if (userData?.role === "admin") {
-        navigate("/adminDashboard");
+        navigate("/admin");
       } else {
         navigate("/");
       }

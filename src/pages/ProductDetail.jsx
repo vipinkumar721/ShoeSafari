@@ -31,7 +31,7 @@ export default function ProductDetail() {
     <div className="bg-black text-white p-8 grid md:grid-cols-2 gap-8">
 
       {/* LEFT IMAGE */}
-      <div className="p-4">
+      <div className="sm:p-4">
         <Image
           className="rounded-[4px] w-full object-cover"
           alt={product.name}
@@ -77,7 +77,7 @@ export default function ProductDetail() {
             description:product.name,
             
           })
-        }} className="py-2 px-5 text-lg rounded-[4px] !bg-[#d3582b] hover:scale-105 transition duration-500 cursor-pointer">
+        }} className="py-2 px-5 w-full sm:w-[190px] text-lg rounded-[4px] !bg-[#d3582b] hover:scale-105 transition duration-500 cursor-pointer">
           ADD TO CART
         </button>
 

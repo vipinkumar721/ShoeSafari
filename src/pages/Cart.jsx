@@ -60,7 +60,7 @@ export default function Cart() {
                 >
                   {/* Image */}
                   <div
-                    className="w-24 sm:w-32 md:w-46 flex-shrink-0 cursor-pointer"
+                    className="w-[190px] sm:w-32 md:w-46 flex-shrink-0 cursor-pointer"
                     onClick={() => navigate(`/product/${item.id}`)}
                   >
                     <img

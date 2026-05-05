@@ -26,7 +26,7 @@ const AddProduct = () => {
         description: "Product Added Successfully",
       });
 
-      navigate("/adminDashboard/product-list");
+      navigate("/admin/product-list");
     } catch (error) {
       notification.error({
         message: "Error",
