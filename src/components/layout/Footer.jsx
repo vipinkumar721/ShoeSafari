@@ -54,10 +54,10 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="flex flex-col md:flex-row justify-between items-center border-t border-white/10 pt-6 text-xs text-gray-500 gap-4">
-        <p>© 2025 EQUIP EXPEDITIONS. ALL RIGHTS RESERVED.</p>
+      <div className="flex flex-col md:flex-row justify-between items-center border-t border-white/10 pt-6 text-lg text-gray-500 gap-4">
+        <p>© 2026 EQUIP EXPEDITIONS. ALL RIGHTS RESERVED.</p>
 
-        <div className="flex gap-6 tracking-widest">
+        <div className="flex text-sm gap-6 tracking-widest">
           <span>STAY WILD</span>
           <span>KEEP MOVING</span>
           <span>RESPECT THE EARTH</span>

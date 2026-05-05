@@ -19,12 +19,11 @@ const Orders = () => {
     fetchOrders();
   }, []);
 
-  
   const info = (order) => {
     Modal.info({
       title: "Order Details",
       content: (
-        <div className="max-h-[400px] overflow-y-auto text-white">
+        <div className="max-h-[400px] overflow-y-auto !text-white">
           <p className="font-semibold mb-2">
             User ID: {order.userId}
           </p>
@@ -32,7 +31,6 @@ const Orders = () => {
             Total: ₹{order.total}
           </p>
 
-          {/* ✅ Safe mapping */}
           {order.items?.map((item, index) => (
             <div
               key={index}
@@ -58,35 +56,47 @@ const Orders = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#121212] text-white p-6">
+    <div className="min-h-screen bg-[#121212] text-white p-4 sm:p-6">
+      
+      {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">ALL ORDERS</h1>
-        <p className="text-gray-400 text-sm">NEW ORDERS ADDED</p>
+        <h1 className="text-2xl sm:text-3xl font-bold">ALL ORDERS</h1>
+        <p className="text-gray-400 text-xs sm:text-sm">
+          NEW ORDERS ADDED
+        </p>
       </div>
 
+      {/* Orders List */}
       <div>
         {orders.map((order, index) => (
           <div
             key={order.id}
-            className="flex justify-between items-center text-black bg-white rounded-[6px] p-4 mb-3"
+            className="
+              flex flex-col sm:flex-row 
+              sm:justify-between sm:items-center 
+              text-white bg-[#2a2a2a] rounded-[6px] 
+              p-4 mb-3 gap-2 sm:gap-0
+            "
           >
-            <h1 className="w-[20%] font-medium">
+            {/* Order Number */}
+            <h1 className="sm:w-[20%] font-medium text-sm sm:text-base">
               Order: {index + 1}
             </h1>
 
-            <h2 className="w-[40%] text-sm">
+            {/* User ID */}
+            <h2 className="sm:w-[40%] text-xs sm:text-sm break-all">
               User ID: {order.userId}
             </h2>
 
-            <h4 className="w-[20%] font-semibold">
+            {/* Total */}
+            <h4 className="sm:w-[20%] font-semibold text-sm sm:text-base">
               ₹{order.total}
             </h4>
 
-            <Space className="w-[20%] flex justify-end">
+            {/* Button */}
+            <Space className="sm:w-[20%] flex sm:justify-end">
               <Button
-                className="!bg-[#d3582b] !rounded-[4px] !border-none !text-white !font-semibold hover:bg-orange-600 hover:scale-105 transition-all duration-300"
-                
-                // ✅ IMPORTANT FIX
+                className="!bg-[#d3582b] !rounded-[4px] !border-none !text-white !font-semibold hover:bg-orange-600 hover:scale-105 transition-all duration-300 w-full sm:w-auto"
                 onClick={() => info(order)}
               >
                 View Details

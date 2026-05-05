@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { Tooltip, Button } from "antd";
+import React, { useState, useEffect } from "react";
+import { Tooltip, Button, Popover } from "antd";
 import { Search, ShoppingBag, User, Menu, X } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+
+const auth = getAuth();
 
 const NAV_LINKS = [
   { label: "Home", to: "/" },
@@ -10,20 +13,50 @@ const NAV_LINKS = [
   { label: "Contact Us", to: "" },
 ];
 
-const ICON_ACTIONS = [
-  { Icon: Search, label: "Search", to: "" },
-  { Icon: ShoppingBag, label: "Bag", to: "/cart" },
-  { Icon: User, label: "Account", to: "" },
-];
-
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
   const location = useLocation();
+
+  
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/login");
+  };
+
+  
+  const profileContent = (
+    <div className="min-w-[130px]">
+      <p className="font-semibold text-sm">
+        Profile: {user?.displayName || "User"}
+      </p>
+      <p className="text-sm text-gray-500 mb-3">
+        {user?.email}
+      </p>
+
+      <button
+        onClick={handleLogout}
+        className="w-full bg-[#e8734a] cursor-pointer text-white py-1 rounded hover:opacity-90"
+      >
+        Sign Out
+      </button>
+    </div>
+  );
 
   return (
     <nav className="bg-[#1a1208]">
       <div className="max-w-[1750px] m-auto flex items-center justify-between h-20 px-6 md:px-12">
+
         {/* LOGO */}
         <div
           onClick={() => navigate("/")}
@@ -47,7 +80,6 @@ const Navbar = () => {
                   }}
                 >
                   {label}
-
                   <span
                     className="absolute bottom-0 left-0 h-0.5 transition-all duration-300"
                     style={{
@@ -63,23 +95,36 @@ const Navbar = () => {
 
         {/* RIGHT ICONS */}
         <div className="flex items-center gap-4">
-          {/* DESKTOP ICONS */}
+
+          {/* DESKTOP */}
           <div className="hidden md:flex items-center gap-1">
-            {ICON_ACTIONS.map(({ Icon, label, to }) => (
-              <Tooltip key={label} title={label}>
-                <Link to={to}>
-                  <Button
-                    className="!bg-transparent !border-none hover:scale-110 transition"
-                    style={{ color: "#f0ece4" }}
-                  >
-                    <Icon size={20} />
-                  </Button>
-                </Link>
-              </Tooltip>
-            ))}
+
+            <Tooltip title="Search">
+              <Link to="/">
+                <Button className="!bg-transparent !border-none hover:scale-110" style={{ color: "#f0ece4" }}>
+                  <Search size={20} />
+                </Button>
+              </Link>
+            </Tooltip>
+
+            <Tooltip title="Cart">
+              <Link to="/cart">
+                <Button className="!bg-transparent !border-none hover:scale-110" style={{ color: "#f0ece4" }}>
+                  <ShoppingBag size={20} />
+                </Button>
+              </Link>
+            </Tooltip>
+
+            {/* PROFILE ICON WITH HOVER */}
+            <Popover content={profileContent} trigger="hover" placement="bottom">
+              <Button className="!bg-transparent !border-none hover:scale-110" style={{ color: "#f0ece4" }}>
+                <User size={20} />
+              </Button>
+            </Popover>
+
           </div>
 
-          {/* MOBILE ICONS */}
+          {/* MOBILE */}
           <div className="flex md:hidden items-center gap-3">
             <Link to="/search">
               <Search size={20} color="#f0ece4" />
@@ -103,13 +148,14 @@ const Navbar = () => {
       {/* MOBILE MENU */}
       <div
         style={{
-          maxHeight: menuOpen ? "400px" : "0px",
+          maxHeight: menuOpen ? "500px" : "0px",
           overflow: "hidden",
           transition: "0.3s",
           background: "#1a1208",
         }}
       >
         <ul className="flex flex-col">
+
           {NAV_LINKS.map(({ label, to }) => {
             const isActive = location.pathname === to;
 
@@ -118,11 +164,9 @@ const Navbar = () => {
                 <Link
                   to={to}
                   onClick={() => setMenuOpen(false)}
+                  className="block px-6 py-3 font-semibold"
                   style={{
-                    display: "block",
-                    padding: "14px 24px",
                     color: isActive ? "#e8734a" : "#f0ece4",
-                    fontWeight: 600,
                   }}
                 >
                   {label}
@@ -131,22 +175,21 @@ const Navbar = () => {
             );
           })}
 
-          <li>
-            <Link
-              to="/account"
-              onClick={() => setMenuOpen(false)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "14px 24px",
-                color: "#f0ece4",
-              }}
-            >
-              <User size={18} />
-              Account
-            </Link>
-          </li>
+          {/* MOBILE PROFILE SECTION */}
+          {user && (
+            <li className="px-6 py-3 text-white border-t border-gray-700">
+              <p className="font-semibold text-sm">{user.displayName || "User"}</p>
+              <p className="text-xs text-gray-400 mb-2">{user.email}</p>
+
+              <button
+                onClick={handleLogout}
+                className="w-full bg-[#e8734a] py-1 rounded"
+              >
+                Sign Out
+              </button>
+            </li>
+          )}
+
         </ul>
       </div>
     </nav>

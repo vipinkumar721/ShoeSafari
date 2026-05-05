@@ -15,9 +15,9 @@
 }
 
 :where(.css-dev-only-do-not-override-ch9ese).ant-modal-confirm.ant-modal .ant-modal-body {
-  background: #1d1d1d;
+  background-color: #1a1a1a !important;
   padding: 20px;
-  border: 1px solid rgb(202, 202, 202);
+  border: 1px solid rgb(102, 102, 102);
   border-radius: 4px;
 }
 

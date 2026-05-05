@@ -161,7 +161,7 @@ const ProductList = () => {
             columns={columns}
             dataSource={products}
             pagination={false}
-            rowKey="id"
+            rowKey="id"zz
           />
         </div>
       </div>
