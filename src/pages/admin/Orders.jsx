@@ -23,7 +23,7 @@ const Orders = () => {
     Modal.info({
       title: "Order Details",
       content: (
-        <div className="max-h-[400px] overflow-y-auto !text-white">
+        <div className="max-h-[400px] overflow-y-auto !text-black">
           <p className="font-semibold mb-2">
             User ID: {order.userId}
           </p>
