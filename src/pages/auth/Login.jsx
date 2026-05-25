@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../config/firebase";
-import { notification } from "antd";
+import { notification, Input } from "antd";
 import { Form } from "antd";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,7 @@ const Login = () => {
       }
 
       notification.success({
-        message: "Success",
+        title: "Success",
         description: "Login Successfully ✅",
       });
     } catch (error) {
@@ -43,7 +43,7 @@ const Login = () => {
         errormsg = "Invalid email or password";
       }
       notification.error({
-        message: "Login Failed",
+        title: "Login Failed",
         description: errormsg || "Something went wrong. Please try again.",
       });
     } finally {
@@ -113,10 +113,9 @@ const Login = () => {
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-sm"
                     style={{ color: "#555555" }}
                   >
-                    ✉
                   </span>
 
-                  <input
+                  <Input
                     type="email"
                     placeholder="explorer@equipt.com"
                     className="w-full rounded-lg pl-9 pr-3 py-3 text-sm outline-none transition-colors"
@@ -158,14 +157,13 @@ const Login = () => {
                     🔒
                   </span>
 
-                  <input
-                    type={showPassword ? "text" : "password"}
+                  <Input.Password
                     placeholder="••••••••"
                     className="w-full rounded-lg pl-9 pr-10 py-3 text-sm outline-none transition-colors"
                     style={{
                       background: "#2a2a2a",
                       border: "1px solid #3a3a3a",
-                      color: "#cccccc",
+                      color: "#ccc",
                     }}
                     onFocus={(e) => (e.target.style.borderColor = "#e8711a")}
                     onBlur={(e) => (e.target.style.borderColor = "#3a3a3a")}
@@ -176,13 +174,13 @@ const Login = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-sm"
                     style={{
-                      color: "#555555",
+                      color: "#fff",
                       background: "none",
                       border: "none",
                       cursor: "pointer",
                     }}
                   >
-                    👁
+                    
                   </button>
                 </div>
               </Form.Item>

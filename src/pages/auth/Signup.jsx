@@ -116,7 +116,7 @@ const Signup = () => {
                     ✉
                   </span>
 
-                  <input
+                  <Input
                     type="email"
                     placeholder="explorer@equipt.com"
                     className="w-full rounded-lg pl-9 pr-3 py-3 text-sm outline-none transition-colors"
@@ -156,8 +156,7 @@ const Signup = () => {
                   🔒
                 </span>
 
-                <input
-                  type={showPassword ? "text" : "password"}
+                <Input.Password
                   placeholder="••••••••"
                   className="w-full rounded-lg pl-9 pr-10 py-3 text-sm outline-none transition-colors"
                   style={{
@@ -180,7 +179,6 @@ const Signup = () => {
                     cursor: "pointer",
                   }}
                 >
-                  👁
                 </button>
               </div>
             </Form.Item>

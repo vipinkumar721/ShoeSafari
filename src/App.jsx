@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Signup from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminRoute from "./routes/AdminRoute";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -20,7 +21,7 @@ const App = () => {
         <Routes>
 
           {/* Public Routes */}
-          <Route path="/Login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
           {/* User Protected */}
@@ -33,7 +34,7 @@ const App = () => {
           </Route>
 
           {/* Admin Protected */}
-          <Route path="/admin" element={<ProtectedRoute><AdminDashboard/></ProtectedRoute>}>
+          <Route path="/admin" element={<AdminRoute><AdminDashboard/></AdminRoute>}>
             <Route path="addProduct" element={<AddProduct />} />
             <Route path="product-list" element={<ProductList />} />
             <Route path="orders" element={<Orders />} />
